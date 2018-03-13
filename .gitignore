@@ -7,6 +7,7 @@ local
 man
 **/*.pyc
 *.egg-info
+.eggs
 sample.data
 pip-selfcheck.json
 share
