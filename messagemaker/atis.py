@@ -71,7 +71,7 @@ def message(metar, rwy, letter):
         parts.append(part)
     ## variable
     if metar.wind_dir_to and metar.wind_dir_from:
-        template = '[VRB BTN] ${from} [AND] ${to} [DEG]'
+        template = '[VRB BTN] ${direction_from} [AND] ${direction_to} [DEG]'
         part = Template(template).substitute(
             direction_from='%03d' % metar.wind_dir_from._degrees,
             direction_to='%03d' % metar.wind_dir_to._degrees
