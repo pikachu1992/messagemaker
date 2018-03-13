@@ -25,7 +25,7 @@ from messagemaker import *
 from bisect import bisect_right
 
 
-def message(metar, deprwy, arrrwy, atiscode):
+def message(metar, rwy, letter):
     metar = Metar.Metar(metar)
     airport = AIRPORT_INFO[metar.station_id]
     parts = []
@@ -34,15 +34,15 @@ def message(metar, deprwy, arrrwy, atiscode):
     template = '[$airport ATIS] [$letter] $time'
     part = Template(template).substitute(
         airport=metar.station_id,
-        letter=atiscode,
+        letter=letter,
         time=metar.time.strftime("%H%M"))
     parts.append(part)
 
     # expected approach
     template = '[EXP ${approach} APCH] [RWY IN USE] ${rwy}'
     part = Template(template).substitute(
-        rwy=arrrwy,
-        approach=airport['approaches'][arrrwy]
+        rwy=rwy,
+        approach=airport['approaches'][rwy]
     )
     parts.append(part)
 
@@ -97,6 +97,6 @@ def message(metar, deprwy, arrrwy, atiscode):
     # QNH
     parts.append('[QNH] %d' % metar.press._value)
 
-    parts.append('[ACK INFO] [%s]' % atiscode)
+    parts.append('[ACK INFO] [%s]' % letter)
 
     return ' '.join(parts)
