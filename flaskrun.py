@@ -40,4 +40,4 @@ if __name__ == '__main__':
     if 'PORT' in os.environ:
         app.run(int(os.environ.get('PORT')))
     else:
-        app.run8)
+        app.run()
