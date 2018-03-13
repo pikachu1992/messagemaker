@@ -24,4 +24,4 @@ from string import Template
 
 def make_substitute(format, context):
     template = Template(format)
-    return template.substitute(test='true')
+    return template.substitute(context)

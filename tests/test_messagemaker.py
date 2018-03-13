@@ -16,17 +16,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with messagemaker.  If not, see <http://www.gnu.org/licenses/>.
 """
-#!/usr/bin/env python
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-test_messagemaker
-----------------------------------
-
-Tests for `messagemaker` module.
-"""
-
 import unittest
-from ddt import ddt, data
+from ddt import ddt, data, unpack
 
 from messagemaker import message
 
@@ -34,10 +27,32 @@ from messagemaker import message
 @ddt
 class TestMessageMaker(unittest.TestCase):
 
-    def test_makeSubstitute_primative_returnsSelf(self):
-        format = '$test'
-        context = {
-            'test': 'true'
+    @unpack
+    @data(
+        {
+            'format': '${test}',
+            'context': {
+                'test': 'true'
+            },
+            'expected': 'true'
+        },
+        {
+            'format': '[${test}]',
+            'context': {
+                'test': 'false'
+            },
+            'expected': '[false]'
+        },
+        {
+            'format': '[WND] [TDZ] ${wind_dir} [DEG] ${wind_speed} [KT]',
+            'context': {
+                'wind_dir': 240,
+                'wind_speed': 7
+            },
+            'expected': '[WND] [TDZ] 240 [DEG] 7 [KT]'
         }
+    )
+    def test_makeSubstitute_primative_returnsSelf(
+        self, format, context, expected):
         result = message.make_substitute(format, context)
-        self.assertEqual(result, 'true')
+        self.assertEqual(result, expected)
