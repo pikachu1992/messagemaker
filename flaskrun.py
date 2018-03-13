@@ -21,6 +21,7 @@ along with Message Maker.  If not, see <http://www.gnu.org/licenses/>.
 # -*- coding: utf-8 -*-
 from flask import Flask, request
 from messagemaker import atis
+import os
 
 app = Flask(__name__)
 
@@ -36,4 +37,7 @@ def hello_world():
         return 'wrong usage'
 
 if __name__ == '__main__':
-    app.run()
+    if 'PORT' in os.environ:
+        app.run(int(os.environ.get('PORT')))
+    else:
+        app.run8)
