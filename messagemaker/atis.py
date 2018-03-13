@@ -23,9 +23,13 @@ from string import Template
 from metar import Metar
 from messagemaker import *
 from bisect import bisect_right
+import requests
 
 
 def message(metar, rwy, letter):
+    if len(metar) == 4:
+        metar = download_metar(metar)
+
     metar = Metar.Metar(metar)
     airport = AIRPORT_INFO[metar.station_id]
     parts = []
@@ -101,3 +105,7 @@ def message(metar, rwy, letter):
     parts.append('[ACK INFO] [%s]' % letter)
 
     return ' '.join(parts)
+
+def download_metar(icao):
+    return requests.get(
+        'https://avwx.rest/api/metar/%s' % icao).json()['Raw-Report']
