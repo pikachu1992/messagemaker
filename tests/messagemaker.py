@@ -21,38 +21,9 @@ along with messagemaker.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 from ddt import ddt, data, unpack
 
-from messagemaker import message
+from messagemaker import atis
 
 
 @ddt
 class TestMessageMaker(unittest.TestCase):
-
-    @unpack
-    @data(
-        {
-            'format': '${test}',
-            'context': {
-                'test': 'true'
-            },
-            'expected': 'true'
-        },
-        {
-            'format': '[${test}]',
-            'context': {
-                'test': 'false'
-            },
-            'expected': '[false]'
-        },
-        {
-            'format': '[WND] [TDZ] ${wind_dir} [DEG] ${wind_speed} [KT]',
-            'context': {
-                'wind_dir': 240,
-                'wind_speed': 7
-            },
-            'expected': '[WND] [TDZ] 240 [DEG] 7 [KT]'
-        }
-    )
-    def test_makeSubstitute_primative_returnsSelf(
-        self, format, context, expected):
-        result = message.make_substitute(format, context)
-        self.assertEqual(result, expected)
+    pass
