@@ -1,0 +1,4 @@
+versioneer
+setuptools
+setuptools-lint
+ddt
