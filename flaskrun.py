@@ -32,7 +32,7 @@ def hello_world():
     letter = request.args.get('letter')
 
     if metar and rwy and letter:
-        return atis.message(metar, rwy, letter)
+        return atis.message_try(metar, rwy, letter)
     else:
         return 'wrong usage'
 
