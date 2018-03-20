@@ -55,9 +55,11 @@ AIRPORT_INFO = {
             '28': 'ILS'
         },
         'arrdep_info': {
-            '<pista>': [
+            '10': [
                 '<mensagem>', # é adicionado depois do transition level
-            ]
+            ],
+            '28': [
+                '<mensagem>', # é adicionado depois do transition level
         },
         'general_info': [
             '<mensagem>', # inseridas depois do QNH
@@ -68,10 +70,12 @@ AIRPORT_INFO = {
             '17': 'ILS', # é substituído em [EXP <aqui> APCH]
             '35': 'R-NAV'
         },
-        'arrdep_info': {
-            '<pista>': [
+       'arrdep_info': {
+            '17': [
                 '<mensagem>', # é adicionado depois do transition level
-            ]
+            ],
+            '35': [
+                '<mensagem>', # é adicionado depois do transition level
         },
         'general_info': [
             '<mensagem>', # inseridas depois do QNH
@@ -83,9 +87,11 @@ AIRPORT_INFO = {
             '23': 'VOR DME'
         },
         'arrdep_info': {
-            '<pista>': [
+            '05': [
                 '<mensagem>', # é adicionado depois do transition level
-            ]
+            ],
+            '23': [
+                '<mensagem>', # é adicionado depois do transition level
         },
         'general_info': [
             '<mensagem>', # inseridas depois do QNH
