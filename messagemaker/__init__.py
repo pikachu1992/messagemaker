@@ -55,11 +55,8 @@ AIRPORT_INFO = {
             '28': 'ILS'
         },
         'arrdep_info': {
-            '10': [
-                '<mensagem>', # é adicionado depois do transition level
-            ],
-            '28': [
-                '<mensagem>', # é adicionado depois do transition level
+            '10': [],
+            '28': []
         },
         'general_info': [
             '<mensagem>', # inseridas depois do QNH
@@ -72,11 +69,8 @@ AIRPORT_INFO = {
             '35': 'R-NAV'
         },
        'arrdep_info': {
-            '17': [
-                '<mensagem>', # é adicionado depois do transition level
-            ],
-            '35': [
-                '<mensagem>', # é adicionado depois do transition level
+            '17': [],
+            '35': []
         },
         'general_info': [
             '<mensagem>', # inseridas depois do QNH
@@ -89,15 +83,12 @@ AIRPORT_INFO = {
             '23': 'VOR DME'
         },
         'arrdep_info': {
-            '05': [
-                '<mensagem>', # é adicionado depois do transition level
-            ],
-            '23': [
-                '<mensagem>', # é adicionado depois do transition level
+            '05': [],
+            '23': []
         },
         'general_info': [
             '<mensagem>', # inseridas depois do QNH
-        ]
+        ],
         'transition_altitude': '5000'
     }
 }
