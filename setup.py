@@ -1,6 +1,6 @@
 """
 messagemaker
-Copyright (C) 2018  Pedro Rodrigues <prodrigues1990@gmai.com>
+Copyright (C) 2018  Pedro Rodrigues <prodrigues1990@gmail.com>
 
 This file is part of messagemaker.
 
@@ -45,7 +45,7 @@ setup(
     description="",
     long_description=readme,
     author="Pedro Rodrigues",
-    author_email='prodrigues1990@gmai.com',
+    author_email='prodrigues1990@gmail.com',
     url='https://github.com/pedro2555/message-maker',
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     include_package_data=True,
