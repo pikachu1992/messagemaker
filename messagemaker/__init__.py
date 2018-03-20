@@ -51,7 +51,8 @@ AIRPORT_INFO = {
     },
     'LPFR': {
         'approaches': {
-            '<pista>': '', # é substituído em [EXP <aqui> APCH]
+            '10': 'R-NAV', # é substituído em [EXP <aqui> APCH]
+            '28': 'ILS'
         },
         'arrdep_info': {
             '<pista>': [
@@ -64,7 +65,8 @@ AIRPORT_INFO = {
     },
     'LPPR': {
         'approaches': {
-            '<pista>': '', # é substituído em [EXP <aqui> APCH]
+            '17': 'ILS', # é substituído em [EXP <aqui> APCH]
+            '35': 'R-NAV'
         },
         'arrdep_info': {
             '<pista>': [
@@ -77,7 +79,8 @@ AIRPORT_INFO = {
     },
     'LPMA': {
         'approaches': {
-            '<pista>': '', # é substituído em [EXP <aqui> APCH]
+            '05': 'VOR DME', # é substituído em [EXP <aqui> APCH]
+            '23': 'VOR DME'
         },
         'arrdep_info': {
             '<pista>': [
