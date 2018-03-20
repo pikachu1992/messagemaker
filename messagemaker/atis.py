@@ -119,7 +119,7 @@ def message(metar, rwy, letter):
     for general_info in airport['general_info']:
         parts.append(general_info)
 
-    parts.append('[ACK %s INFO] [%s]' % (, letter))
+    parts.append('[ACK %s INFO] [%s]' % (metar.station_id.upper(), letter))
 
     return ' '.join(parts)
 
