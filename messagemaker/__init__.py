@@ -33,6 +33,9 @@ AIRPORT_INFO = {
             '35': 'VOR',
             '17': 'VISUAL'
         },
+        'general_info': [
+            '[COMPLY WITH SPEED LIMITATIONS UNLESS OTHERWISE ADVISED BY AIR \
+            TRAFFIC CONTROL]'],
         'transition_altitude': '4000'
     }
 }
@@ -78,4 +81,4 @@ TRANSITION_LEVEL = {
         (1050.3, '85'),
         (9999, '80')
     ]
-    }
+}

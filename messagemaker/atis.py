@@ -93,7 +93,7 @@ def message(metar, rwy, letter):
 
     # visibility
     if str(metar.vis) == 'greater than 10000 meters':
-        parts.append('[VIS] [10KM]')
+        parts.append('[VIS] 10[KM]')
 
     parts.append('[CLD]')
     for sky in metar.sky:
@@ -110,6 +110,9 @@ def message(metar, rwy, letter):
 
     # QNH
     parts.append('[QNH] %d' % metar.press._value)
+
+    for general_info in AIRPORT_INFO[metar.station_id]['general_info']:
+        parts.append(general_info)
 
     parts.append('[ACK INFO] [%s]' % letter)
 
