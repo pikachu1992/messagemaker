@@ -2,6 +2,7 @@
 Message Maker
 
 Copyright (C) 2018  Pedro Rodrigues <prodrigues1990@gmail.com>
+                    Bernardo Reis
 
 This file is part of Message Maker.
 
