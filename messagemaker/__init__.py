@@ -63,7 +63,8 @@ AIRPORT_INFO = {
         },
         'general_info': [
             '<mensagem>', # inseridas depois do QNH
-        ]
+        ],
+        'transition_altitude': '4000'
     },
     'LPPR': {
         'approaches': {
@@ -79,7 +80,8 @@ AIRPORT_INFO = {
         },
         'general_info': [
             '<mensagem>', # inseridas depois do QNH
-        ]
+        ],
+        'transition_altitude': '4000'
     },
     'LPMA': {
         'approaches': {
@@ -96,6 +98,7 @@ AIRPORT_INFO = {
         'general_info': [
             '<mensagem>', # inseridas depois do QNH
         ]
+        'transition_altitude': '5000'
     }
 }
 
