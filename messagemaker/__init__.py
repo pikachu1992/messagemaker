@@ -47,6 +47,45 @@ AIRPORT_INFO = {
             '[COMPLY WITH SPEED LIMITATIONS UNLESS OTHERWISE ADVISED BY AIR \
             TRAFFIC CONTROL]'],
         'transition_altitude': '4000'
+    },
+    'LPFR': {
+        'approaches': {
+            '<pista>': '', # é substituído em [EXP <aqui> APCH]
+        },
+        'arrdep_info': {
+            '<pista>': [
+                '<mensagem>', # é adicionado depois do transition level
+            ]
+        },
+        'general_info': [
+            '<mensagem>', # inseridas depois do QNH
+        ]
+    },
+    'LPPR': {
+        'approaches': {
+            '<pista>': '', # é substituído em [EXP <aqui> APCH]
+        },
+        'arrdep_info': {
+            '<pista>': [
+                '<mensagem>', # é adicionado depois do transition level
+            ]
+        },
+        'general_info': [
+            '<mensagem>', # inseridas depois do QNH
+        ]
+    },
+    'LPMA': {
+        'approaches': {
+            '<pista>': '', # é substituído em [EXP <aqui> APCH]
+        },
+        'arrdep_info': {
+            '<pista>': [
+                '<mensagem>', # é adicionado depois do transition level
+            ]
+        },
+        'general_info': [
+            '<mensagem>', # inseridas depois do QNH
+        ]
     }
 }
 
