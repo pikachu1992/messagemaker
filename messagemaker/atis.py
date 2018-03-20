@@ -96,10 +96,14 @@ def message(metar, rwy, letter):
         parts.append(part)
 
     # visibility
+    print(metar.vis)
     if str(metar.vis) == 'greater than 10000 meters':
         parts.append('[VIS] 10[KM]')
+    if str(metar.vis) == '10000 meters':
+        parts.append('[CAVOK]')
 
-    parts.append('[CLD]')
+    if 'sky' in metar.sky:
+        parts.append('[CLD]')
     for sky in metar.sky:
         cover, height, cb = sky
         parts.append('[%s] {%d} [FT]' % (cover, height._value))
