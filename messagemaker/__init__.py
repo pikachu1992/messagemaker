@@ -33,6 +33,16 @@ AIRPORT_INFO = {
             '35': 'VOR',
             '17': 'VISUAL'
         },
+        'arrdep_info': {
+            '03': [
+                '[AFTER LANDING VACATE VIA] HN'
+            ],
+            '21': [
+                '[MEDIUM AND LIGHT AIRCRAFT EXPECT POSITION U FOR DEPARTURE, IF\
+                 UNABLE ADVISE BEFORE TAXI]',
+                '[AFTER LANDING VACATE VIA] HS'
+            ]
+        },
         'general_info': [
             '[COMPLY WITH SPEED LIMITATIONS UNLESS OTHERWISE ADVISED BY AIR \
             TRAFFIC CONTROL]'],

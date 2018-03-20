@@ -68,6 +68,10 @@ def message(metar, rwy, letter):
     _, transition_level = TRANSITION_LEVEL[transition_alt][index]
     parts.append(template % transition_level)
 
+    # specific departure and arrival information
+    for rwy_message in airport['arrdep_info'][rwy]:
+        parts.append(rwy_message)
+
     # wind
     template = '[WND] ${direction} [DEG] ${speed} [KT]'
     part = Template(template).substitute(
@@ -111,7 +115,8 @@ def message(metar, rwy, letter):
     # QNH
     parts.append('[QNH] %d' % metar.press._value)
 
-    for general_info in AIRPORT_INFO[metar.station_id]['general_info']:
+    # general arrival and departure information
+    for general_info in airport['general_info']:
         parts.append(general_info)
 
     parts.append('[ACK INFO] [%s]' % letter)
