@@ -77,9 +77,13 @@ def message(metar, rwy, letter):
         template = '[WND] ${direction} [DEG] ${speed} [KT]'
         part = Template(template).substitute(
             direction='%03d' % metar.wind_dir._degrees,
-            speed='%d' % metar.wind_speed._value
-        )
-        parts.append(part)
+            speed='%d' % metar.wind_speed._value)
+
+        # calm winds (to avoid WND 000 DEG 0 KT)
+        if metar.wind_speed._value == 0:
+            parts.append('[WND] [CALM]')
+        else:
+            parts.append(part)
     else:
         parts.append('[WND] [VRB] %d [KT]' % metar.wind_speed._value)
     ## gusts
