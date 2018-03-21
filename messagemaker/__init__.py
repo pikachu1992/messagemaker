@@ -36,10 +36,10 @@ AIRPORT_INFO = {
         },
         'arrdep_info': {
             '03': [
-                '[AFTER LANDING VACATE VIA] HN'
+                '[AFTER LANDING VACATE VIA HN]'
             ],
             '21': [
-                '[AFTER LANDING VACATE VIA] HS',
+                '[AFTER LANDING VACATE VIA HS]',
                 '[MEDIUM AND LIGHT AIRCRAFT EXPECT POSITION U FOR DEPARTURE, IF\
                  UNABLE ADVISE BEFORE TAXI]',
             ]

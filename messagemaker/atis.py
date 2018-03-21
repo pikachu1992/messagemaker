@@ -33,7 +33,7 @@ def message_try(metar, rwy, letter):
     except Exception as crap:
         print(crap)
 
-    return '[ATIS] [OUT OF SERVICE]' if response is None else response
+    return '[ATIS OUT OF SERVICE]' if response is None else response
 
 def message(metar, rwy, letter):
     if len(metar) == 4:
