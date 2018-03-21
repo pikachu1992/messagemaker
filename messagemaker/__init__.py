@@ -30,7 +30,7 @@ AIRPORT_INFO = {
     'LPPT': {
         'approaches': {
             '03': 'ILS',
-            '21': 'ILS',
+            '21': 'ILS Z',
             '35': 'VOR',
             '17': 'VISUAL'
         },
