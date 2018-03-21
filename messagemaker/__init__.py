@@ -39,14 +39,15 @@ AIRPORT_INFO = {
                 '[AFTER LANDING VACATE VIA] HN'
             ],
             '21': [
+                '[AFTER LANDING VACATE VIA] HS',
                 '[MEDIUM AND LIGHT AIRCRAFT EXPECT POSITION U FOR DEPARTURE, IF\
                  UNABLE ADVISE BEFORE TAXI]',
-                '[AFTER LANDING VACATE VIA] HS'
             ]
         },
         'general_info': [
             '[COMPLY WITH SPEED LIMITATIONS UNLESS OTHERWISE ADVISED BY AIR \
-            TRAFFIC CONTROL]'],
+            TRAFFIC CONTROL]'
+        ],
         'transition_altitude': '4000'
     },
     'LPFR': {
@@ -58,9 +59,7 @@ AIRPORT_INFO = {
             '10': [],
             '28': []
         },
-        'general_info': [
-            '<mensagem>', # inseridas depois do QNH
-        ],
+        'general_info': [],
         'transition_altitude': '4000'
     },
     'LPPR': {
@@ -72,9 +71,7 @@ AIRPORT_INFO = {
             '17': [],
             '35': []
         },
-        'general_info': [
-            '<mensagem>', # inseridas depois do QNH
-        ],
+        'general_info': [],
         'transition_altitude': '4000'
     },
     'LPMA': {
@@ -86,9 +83,7 @@ AIRPORT_INFO = {
             '05': [],
             '23': []
         },
-        'general_info': [
-            '<mensagem>', # inseridas depois do QNH
-        ],
+        'general_info': [],
         'transition_altitude': '5000'
     }
 }
