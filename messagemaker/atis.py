@@ -95,20 +95,22 @@ def message(metar, rwy, letter):
         )
         parts.append(part)
 
-    # visibility
+    # sky conditions
     print(metar.vis)
-    if str(metar.vis) == 'greater than 10000 meters':
-        parts.append('[VIS] 10[KM]')
     if str(metar.vis) == '10000 meters':
         parts.append('[CAVOK]')
-
-    if 'sky' in metar.sky:
-        parts.append('[CLD]')
-    for sky in metar.sky:
-        cover, height, cb = sky
-        parts.append('[%s] {%d} [FT]' % (cover, height._value))
-        if cb:
-            parts.append('CB')
+    else:
+        ## visibility
+        if str(metar.vis) == 'greater than 10000 meters':
+            parts.append('[VIS] 10[KM]')
+        ## clouds
+        if 'sky' in metar.sky:
+            parts.append('[CLD]')
+        for sky in metar.sky:
+            cover, height, cb = sky
+            parts.append('[%s] {%d} [FT]' % (cover, height._value))
+            if cb:
+                parts.append('CB')
 
     # temperature
     parts.append('[TEMP] %d' % metar.temp._value)
