@@ -52,7 +52,7 @@ def message(metar, rwy, letter):
     parts.append(part)
 
     # expected approach
-    template = '[EXP ${approach} APCH] [RWY IN USE] ${rwy}'
+    template = '[EXP ${approach} APCH] [RWY IN USE ${rwy}]'
     part = Template(template).substitute(
         rwy=rwy,
         approach=airport['approaches'][rwy]
