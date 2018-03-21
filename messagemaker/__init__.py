@@ -41,12 +41,12 @@ AIRPORT_INFO = {
             '21': [
                 '[AFTER LANDING VACATE VIA HS]',
                 '[MEDIUM AND LIGHT AIRCRAFT EXPECT POSITION U FOR DEPARTURE, IF\
-                 UNABLE ADVISE BEFORE TAXI]',
+ UNABLE ADVISE BEFORE TAXI]',
             ]
         },
         'general_info': [
             '[COMPLY WITH SPEED LIMITATIONS UNLESS OTHERWISE ADVISED BY AIR \
-            TRAFFIC CONTROL]'
+TRAFFIC CONTROL]'
         ],
         'transition_altitude': '4000'
     },
