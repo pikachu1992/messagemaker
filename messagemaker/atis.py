@@ -108,6 +108,10 @@ def message(metar, rwy, letter):
         parts.append('[CAVOK]')
     else:
         ## visibility
+        # above or at 5km visibility is given in KM:
+        #   5KM 6KM 7KM .. 10KM
+        # below 5 km visibility is given in meters:
+        #   4000M 3000M ..
         if str(metar.vis) == 'greater than 10000 meters':
             parts.append('[VIS] 10[KM]')
         ## clouds
