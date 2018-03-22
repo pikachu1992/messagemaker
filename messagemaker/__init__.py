@@ -45,8 +45,7 @@ AIRPORT_INFO = {
             ]
         },
         'general_info': [
-            '[COMPLY WITH SPEED LIMITATIONS UNLESS OTHERWISE ADVISED BY AIR \
-TRAFFIC CONTROL]'
+            '[COMPLY WITH SPEED LIMITATIONS UNLESS OTHERWISE ADVISED BY ATC]'
         ],
         'transition_altitude': '4000'
     },
