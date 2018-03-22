@@ -115,7 +115,7 @@ def message(metar, rwy, letter):
         if str(metar.vis) == 'greater than 10000 meters':
             parts.append('[VIS] 10[KM]')
         ## clouds
-        if 'sky' in metar.sky:
+        if metar.sky:
             parts.append('[CLD]')
         for sky in metar.sky:
             cover, height, cb = sky
