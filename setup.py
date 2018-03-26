@@ -22,7 +22,6 @@ from codecs import open
 from os import path
 from setuptools import setup, find_packages
 
-import versioneer
 
 here = path.abspath(path.dirname(__file__))
 
