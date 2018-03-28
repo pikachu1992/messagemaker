@@ -4,3 +4,5 @@
 
 Available at:
 https://messagemaker.herokuapp.com/?metar=LPPT&rwy=21&letter=A
+
+https://messagemaker.herokuapp.com/?metar=$metar($atisairport)&rwy=$arrrwy($atisairport)&letter=$atiscode
