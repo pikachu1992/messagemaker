@@ -121,7 +121,7 @@ def message(metar, rwy, letter):
             cover, height, cb, tcu = sky
             parts.append('[%s] {%d} [FT]' % (cover, height._value))
             if cb:
-                parts.append('CB')
+                parts.append('CB'),
             if tcu:
                 parts.append('TCU')
 
