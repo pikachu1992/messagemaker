@@ -120,10 +120,10 @@ def message(metar, rwy, letter):
         for sky in metar.sky:
             cover, height, cb, tcu = sky
             parts.append('[%s] {%d} [FT]' % (cover, height._value))
-            if  cb:
-                  parts.append('CB')
-            elif tcu:
-                  parts.append('TCU')
+            if cb:
+                parts.append('CB')
+            if tcu:
+                parts.append('TCU')
 
     # temperature
     parts.append('[TEMP] %d' % metar.temp._value)
