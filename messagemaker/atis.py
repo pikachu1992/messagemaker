@@ -122,7 +122,7 @@ def message(metar, rwy, letter):
             parts.append('[%s] {%d} [FT]' % (cover, height._value))
             if cb:
                 parts.append('CB'),
-            if tcu:
+                tcu:
                 parts.append('TCU')
 
     # temperature
