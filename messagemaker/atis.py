@@ -42,6 +42,12 @@ def intro(letter, metar, airport):
         letter=letter,
         time=metar.time.strftime("%H%M"))
 
+def approach(rwy, airport):
+    template = '[EXP ${approach} APCH] [RWY IN USE ${rwy}]'
+    return Template(template).substitute(
+        rwy=rwy,
+        approach=airport['approaches'][rwy])
+
 def message(metar, rwy, letter):
     if len(metar) == 4:
         metar = download_metar(metar)
