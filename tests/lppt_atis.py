@@ -20,10 +20,25 @@ along with messagemaker.  If not, see <http://www.gnu.org/licenses/>.
 # -*- coding: utf-8 -*-
 import unittest
 from ddt import ddt, data, unpack
+from metar import Metar
 
-from messagemaker import atis
-
+from messagemaker.atis import *
+import settings
 
 @ddt
-class TestMessageMaker(unittest.TestCase):
-    pass
+class TestLpptAtis(unittest.TestCase):
+
+    def setUp(self):
+        self.airport = settings.AIRPORTS['LPPT']
+        self.letter = 'A'
+
+    @data(
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1016',
+        '[LPPT ATIS] [A] 1800'),
+        ('METAR LPPT 190530Z 22009KT 9999 -RA FEW012 SCT015 BKN033 12/10 Q1014',
+        '[LPPT ATIS] [A] 0530')
+    )
+    @unpack
+    def test_intro(self, metar, expected):
+        metar = Metar.Metar(metar)
+        self.assertEqual(intro(self.letter, metar, self.airport), expected)

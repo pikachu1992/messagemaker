@@ -35,6 +35,13 @@ def message_try(metar, rwy, letter):
 
     return '[ATIS OUT OF SERVICE]' if response is None else response
 
+def intro(letter, metar, airport):
+    template = '[$airport ATIS] [$letter] $time'
+    return Template(template).substitute(
+        airport=metar.station_id,
+        letter=letter,
+        time=metar.time.strftime("%H%M"))
+
 def message(metar, rwy, letter):
     if len(metar) == 4:
         metar = download_metar(metar)
