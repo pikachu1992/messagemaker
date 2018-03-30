@@ -42,7 +42,7 @@ class TestLpptAtis(unittest.TestCase):
     @unpack
     def test_intro(self, metar, expected):
         metar = Metar.Metar(metar)
-        self.assertEqual(intro(self.letter, metar, self.airport), expected)
+        self.assertEqual(intro(self.letter, metar), expected)
 
     @data(
         ('03', '[EXP ILS APCH] [RWY IN USE 03]'),

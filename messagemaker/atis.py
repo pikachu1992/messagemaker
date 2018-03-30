@@ -35,7 +35,7 @@ def message_try(metar, rwy, letter):
 
     return '[ATIS OUT OF SERVICE]' if response is None else response
 
-def intro(letter, metar, airport):
+def intro(letter, metar):
     template = '[$airport ATIS] [$letter] $time'
     return Template(template).substitute(
         airport=metar.station_id,
@@ -65,7 +65,7 @@ def message(metar, rwy, letter):
     airport = AIRPORT_INFO[metar.station_id]
     parts = []
 
-    parts.append(intro(letter, metar, airport))
+    parts.append(intro(letter, metar))
     parts.append(approach(rwy, airport))
     parts.append(transition_level(airport, TRANSITION_LEVEL, metar))
 
