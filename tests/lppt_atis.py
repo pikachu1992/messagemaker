@@ -30,6 +30,7 @@ class TestLpptAtis(unittest.TestCase):
 
     def setUp(self):
         self.airport = settings.AIRPORTS['LPPT']
+        self.transition = settings.TRANSITION
         self.letter = 'A'
 
     @data(
@@ -50,3 +51,26 @@ class TestLpptAtis(unittest.TestCase):
     @unpack
     def test_approach(self, rwy, expected):
         self.assertEqual(approach(rwy, self.airport), expected)
+
+    @data(
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q942', '[TL] 75'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q943', '[TL] 70'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q959', '[TL] 70'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q960', '[TL] 65'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q976', '[TL] 65'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q978', '[TL] 60'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q994', '[TL] 60'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q996', '[TL] 55'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1013', '[TL] 55'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1014', '[TL] 50'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1031', '[TL] 50'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1032', '[TL] 45'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1050', '[TL] 45'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1051', '[TL] 40'),
+    )
+    @unpack
+    def test_transitionlevel(self, metar, expected):
+        metar = Metar.Metar(metar)
+        self.assertEqual(
+            transition_level(self.airport, self.transition, metar),
+            expected)

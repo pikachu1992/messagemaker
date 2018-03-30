@@ -48,6 +48,15 @@ def approach(rwy, airport):
         rwy=rwy,
         approach=airport['approaches'][rwy])
 
+def transition_level(airport, tl_tbl, metar):
+    template = '[TL] %s'
+    transition_alt = airport['transition_altitude']
+    index = bisect_right(
+        tl_tbl[transition_alt],
+        (metar.press._value,))
+    _, transition_level = TRANSITION_LEVEL[transition_alt][index]
+    return template % transition_level
+    
 def message(metar, rwy, letter):
     if len(metar) == 4:
         metar = download_metar(metar)
@@ -56,30 +65,9 @@ def message(metar, rwy, letter):
     airport = AIRPORT_INFO[metar.station_id]
     parts = []
 
-    # intro
-    template = '[$airport ATIS] [$letter] $time'
-    part = Template(template).substitute(
-        airport=metar.station_id,
-        letter=letter,
-        time=metar.time.strftime("%H%M"))
-    parts.append(part)
-
-    # expected approach
-    template = '[EXP ${approach} APCH] [RWY IN USE ${rwy}]'
-    part = Template(template).substitute(
-        rwy=rwy,
-        approach=airport['approaches'][rwy]
-    )
-    parts.append(part)
-
-    # transition level
-    template = '[TL] %s'
-    transition_alt = airport['transition_altitude']
-    index = bisect_right(
-        TRANSITION_LEVEL[transition_alt],
-        (metar.press._value,))
-    _, transition_level = TRANSITION_LEVEL[transition_alt][index]
-    parts.append(template % transition_level)
+    parts.append(intro(letter, metar, airport))
+    parts.append(approach(rwy, airport))
+    parts.append(transition_level(airport, TRANSITION_LEVEL, metar))
 
     # specific departure and arrival information
     for rwy_message in airport['arrdep_info'][rwy]:
