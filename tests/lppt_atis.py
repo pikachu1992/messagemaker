@@ -30,6 +30,7 @@ class TestLpptAtis(unittest.TestCase):
 
     def setUp(self):
         self.airport = settings.AIRPORTS['LPPT']
+        self.transition = settings.TRANSITION
         self.letter = 'A'
 
     @data(
@@ -50,3 +51,14 @@ class TestLpptAtis(unittest.TestCase):
     @unpack
     def test_approach(self, rwy, expected):
         self.assertEqual(approach(rwy, self.airport), expected)
+
+    @data(
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1016',
+        '[TL] 50')        
+    )
+    @unpack
+    def test_transitionlevel(self, metar, expected):
+        metar = Metar.Metar(metar)
+        self.assertEqual(
+            transition_level(self.airport, self.transition, metar),
+            expected)
