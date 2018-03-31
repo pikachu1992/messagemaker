@@ -111,7 +111,9 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
 
     @data(
         ('METAR LPPT 191800Z 35015KT 11/06 Q1016',
-        '')
+        ''),
+        ('METAR LPPT 191800Z 35015KT SCT003 11/06 Q1016',
+        '[CLD] [SCT] {300} [FT]')
     )
     @unpack
     def test_sky(self, metar, expected):
