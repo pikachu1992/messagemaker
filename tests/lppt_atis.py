@@ -151,3 +151,34 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
     def test_sky_tcucb(self, metar, expected):
         metar = Metar.Metar(metar)
         self.assertEqual(sky(metar), expected, 'see: issue#14')
+
+    @data(
+        ('METAR LPPT 191800Z 35015KT 10/05 Q1016', '[TEMP] 10'),
+        ('METAR LPPT 191800Z 35015KT 05/05 Q1016', '[TEMP] 5'),
+        ('METAR LPPT 191800Z 35015KT M10/05 Q1016', '[TEMP] -10'),
+        ('METAR LPPT 191800Z 35015KT M05/05 Q1016', '[TEMP] -5'),
+    )
+    @unpack
+    def test_temperature(self, metar, expected):
+        metar = Metar.Metar(metar)
+        self.assertEqual(temperature(metar), expected)
+
+    @data(
+        ('METAR LPPT 191800Z 35015KT 10/10 Q1016', '[DP] 10'),
+        ('METAR LPPT 191800Z 35015KT 10/05 Q1016', '[DP] 5'),
+        ('METAR LPPT 191800Z 35015KT 10/M10 Q1016', '[DP] -10'),
+        ('METAR LPPT 191800Z 35015KT 10/M05 Q1016', '[DP] -5'),
+    )
+    @unpack
+    def test_dewpoint(self, metar, expected):
+        metar = Metar.Metar(metar)
+        self.assertEqual(dewpoint(metar), expected)
+
+    @data(
+        ('METAR LPPT 191800Z 35015KT 10/10 Q1016', '[QNH] 1016'),
+        ('METAR LPPT 191800Z 35015KT 10/10 Q996', '[QNH] 996'),
+    )
+    @unpack
+    def test_qnh(self, metar, expected):
+        metar = Metar.Metar(metar)
+        self.assertEqual(qnh(metar), expected)
