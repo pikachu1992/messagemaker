@@ -147,7 +147,6 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         '[CLD] [FEW] [CB] {2000} [FT]')
     )
     @unpack
-    @unittest.expectedFailure
     def test_sky_tcucb(self, metar, expected):
         metar = Metar.Metar(metar)
         self.assertEqual(sky(metar), expected, 'see: issue#14')
