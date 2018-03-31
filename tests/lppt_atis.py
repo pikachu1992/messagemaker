@@ -113,21 +113,21 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         ('METAR LPPT 191800Z 35015KT 11/06 Q1016',
         ''),
         ('METAR LPPT 191800Z 35015KT FEW003 11/06 Q1016',
-        '[CLD] [FEW] {300} [FT]')
+        '[CLD] [FEW] {300} [FT]'),
         ('METAR LPPT 191800Z 35015KT SCT003 11/06 Q1016',
-        '[CLD] [SCT] {300} [FT]')
+        '[CLD] [SCT] {300} [FT]'),
         ('METAR LPPT 191800Z 35015KT BKN003 11/06 Q1016',
-        '[CLD] [BKN] {300} [FT]')
+        '[CLD] [BKN] {300} [FT]'),
         ('METAR LPPT 191800Z 35015KT OVC003 11/06 Q1016',
-        '[CLD] [OVC] {300} [FT]')
+        '[CLD] [OVC] {300} [FT]'),
         ('METAR LPPT 191800Z 35015KT FEW030 11/06 Q1016',
-        '[CLD] [FEW] {3000} [FT]')
+        '[CLD] [FEW] {3000} [FT]'),
         ('METAR LPPT 191800Z 35015KT FEW100 11/06 Q1016',
-        '[CLD] [FEW] {10000} [FT]')
+        '[CLD] [FEW] {10000} [FT]'),
         ('METAR LPPT 191800Z 35015KT FEW000 11/06 Q1016',
-        '[CLD] [FEW] {000} [FT]')
+        '[CLD] [FEW] {000} [FT]'),
         ('METAR LPPT 191800Z 35015KT FEW020CB 11/06 Q1016',
-        '[CLD] [FEW] [CB] {2000} [FT]')
+        '[CLD] [FEW] [CB] {2000} [FT]'),
         ('METAR LPPT 191800Z 35015KT FEW040TCU 11/06 Q1016',
         '[CLD] [FEW] [TCU] {4000} [FT]')
     )
