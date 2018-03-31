@@ -40,5 +40,15 @@ class TestIntegration(unittest.TestCase):
     )
     @unpack
     def test_message_doesnotfail(self, metar, rwy):
-        message(metar, rwy, self.letter)
+        self.assertNotEqual(message(metar, rwy, self.letter), '')
+
+    @unittest.expectedFailure
+    def test_message_windshear_doesnotfail(self):
+        self.assertNotEqual(
+            message(
+                'METAR LPPT 191800Z 35015KT 11/06 Q1016 WS ALL RWYS',
+                self.rwy,
+                self.letter),
+            '',
+            'Python Metar module bug, see https://')
 
