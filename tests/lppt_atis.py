@@ -90,7 +90,11 @@ ABLE ADVISE BEFORE TAXI]']),
             expected)
 
     @data(
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1016', ['[WND] 350 [DEG] 15 [KT]'])
+        ('METAR LPPT 191800Z 35015KT 9999 11/06 Q1016', ['[WND] 350 [DEG] 15 [KT]']),
+        ('METAR LPPT 191800Z 35015KT 350V010 9999 11/06 Q1016', ['[WND] 350 [DEG] 15 [KT]', '[VRB BTN] 350 [AND] 010 [DEG]']),
+        ('METAR LPPT 191800Z 35015G20KT 9999 11/06 Q1016', ['[WND] 350 [DEG] 15 [KT]', '[MAX] 20 [KT]']),
+        ('METAR LPPT 191800Z 35015G20KT 350V010 9999 11/06 Q1016', ['[WND] 350 [DEG] 15 [KT]', '[MAX] 20 [KT]', '[VRB BTN] 350 [AND] 010 [DEG]']),
+        ('METAR LPPT 191800Z 00000KT 9999 11/06 Q1016', ['[WND] [CALM]'])
     )
     @unpack
     def test_wind(self, metar, expected):
