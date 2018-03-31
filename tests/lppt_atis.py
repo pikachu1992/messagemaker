@@ -76,12 +76,10 @@ class TestLpptAtis(unittest.TestCase):
             expected)
 
     @data(
-        ('03', ['[AFTER LANDING VACATE VIA HN]']),
-        ('21', [
-            '[AFTER LANDING VACATE VIA HS]',
-            '[MEDIUM AND LIGHT AIRCRAFT EXPECT POSITION U FOR DEPARTURE, IF UN\
-ABLE ADVISE BEFORE TAXI]']),
-        ('35', [])
+        ('03', '[AFTER LANDING VACATE VIA HN]'),
+        ('21', '[AFTER LANDING VACATE VIA HS] [MEDIUM AND LIGHT AIRCRAFT EXPEC\
+T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
+        ('35', '')
     )
     @unpack
     def test_arrdepinfo(self, rwy, expected):
@@ -90,11 +88,11 @@ ABLE ADVISE BEFORE TAXI]']),
             expected)
 
     @data(
-        ('METAR LPPT 191800Z 35015KT 9999 11/06 Q1016', ['[WND] 350 [DEG] 15 [KT]']),
-        ('METAR LPPT 191800Z 35015KT 350V010 9999 11/06 Q1016', ['[WND] 350 [DEG] 15 [KT]', '[VRB BTN] 350 [AND] 010 [DEG]']),
-        ('METAR LPPT 191800Z 35015G20KT 9999 11/06 Q1016', ['[WND] 350 [DEG] 15 [KT]', '[MAX] 20 [KT]']),
-        ('METAR LPPT 191800Z 35015G20KT 350V010 9999 11/06 Q1016', ['[WND] 350 [DEG] 15 [KT]', '[MAX] 20 [KT]', '[VRB BTN] 350 [AND] 010 [DEG]']),
-        ('METAR LPPT 191800Z 00000KT 9999 11/06 Q1016', ['[WND] [CALM]'])
+        ('METAR LPPT 191800Z 35015KT 9999 11/06 Q1016', '[WND] 350 [DEG] 15 [KT]'),
+        ('METAR LPPT 191800Z 35015KT 350V010 9999 11/06 Q1016', '[WND] 350 [DEG] 15 [KT] [VRB BTN] 350 [AND] 010 [DEG]'),
+        ('METAR LPPT 191800Z 35015G20KT 9999 11/06 Q1016', '[WND] 350 [DEG] 15 [KT] [MAX] 20 [KT]'),
+        ('METAR LPPT 191800Z 35015G20KT 350V010 9999 11/06 Q1016', '[WND] 350 [DEG] 15 [KT] [MAX] 20 [KT] [VRB BTN] 350 [AND] 010 [DEG]'),
+        ('METAR LPPT 191800Z 00000KT 9999 11/06 Q1016', '[WND] [CALM]')
     )
     @unpack
     def test_wind(self, metar, expected):
@@ -103,7 +101,7 @@ ABLE ADVISE BEFORE TAXI]']),
 
     @data(
         ('METAR LPPT 191800Z 35015KT 11/06 Q1016',
-        [])
+        '')
     )
     @unpack
     def test_sky(self, metar, expected):
