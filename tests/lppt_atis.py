@@ -100,3 +100,12 @@ ABLE ADVISE BEFORE TAXI]']),
     def test_wind(self, metar, expected):
         metar = Metar.Metar(metar)
         self.assertEqual(wind(metar), expected)
+
+    @data(
+        ('METAR LPPT 191800Z 35015KT 11/06 Q1016',
+        [])
+    )
+    @unpack
+    def test_sky(self, metar, expected):
+        metar = Metar.Metar(metar)
+        self.assertEqual(sky(metar), expected)
