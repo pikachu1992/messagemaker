@@ -65,21 +65,8 @@ def arrdep_info(airport, rwy):
         parts.append(rwy_message)
     return parts
 
-
-def message(metar, rwy, letter):
-    if len(metar) == 4:
-        metar = download_metar(metar)
-
-    metar = Metar.Metar(metar)
-    airport = AIRPORT_INFO[metar.station_id]
+def wind(metar):
     parts = []
-
-    parts.append(intro(letter, metar))
-    parts.append(approach(rwy, airport))
-    parts.append(transition_level(airport, TRANSITION_LEVEL, metar))
-    parts.append(arrdep_info(airport, rwy))
-
-    # wind
     if metar.wind_dir:
         template = '[WND] ${direction} [DEG] ${speed} [KT]'
         part = Template(template).substitute(
@@ -108,7 +95,22 @@ def message(metar, rwy, letter):
             direction_to='%03d' % metar.wind_dir_to._degrees
         )
         parts.append(part)
+    return parts
 
+def message(metar, rwy, letter):
+    if len(metar) == 4:
+        metar = download_metar(metar)
+
+    metar = Metar.Metar(metar)
+    airport = AIRPORT_INFO[metar.station_id]
+    parts = []
+
+    parts.append(intro(letter, metar))
+    parts.append(approach(rwy, airport))
+    parts.append(transition_level(airport, TRANSITION_LEVEL, metar))
+    parts.append(arrdep_info(airport, rwy))
+    parts.append(wind(metar))
+    
     # sky conditions
     print(metar.vis)
     if str(metar.vis) == '10000 meters':

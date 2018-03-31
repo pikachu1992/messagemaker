@@ -77,7 +77,10 @@ class TestLpptAtis(unittest.TestCase):
 
     @data(
         ('03', ['[AFTER LANDING VACATE VIA HN]']),
-        ('21', ['[AFTER LANDING VACATE VIA HS]', '[MEDIUM AND LIGHT AIRCRAFT EXPECT POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]']),
+        ('21', [
+            '[AFTER LANDING VACATE VIA HS]',
+            '[MEDIUM AND LIGHT AIRCRAFT EXPECT POSITION U FOR DEPARTURE, IF UN\
+ABLE ADVISE BEFORE TAXI]']),
         ('35', [])
     )
     @unpack
@@ -86,3 +89,10 @@ class TestLpptAtis(unittest.TestCase):
             arrdep_info(self.airport, rwy),
             expected)
 
+    @data(
+        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1016', ['[WND] 350 [DEG] 15 [KT]'])
+    )
+    @unpack
+    def test_wind(self, metar, expected):
+        metar = Metar.Metar(metar)
+        self.assertEqual(wind(metar), expected)
