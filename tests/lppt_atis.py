@@ -74,3 +74,15 @@ class TestLpptAtis(unittest.TestCase):
         self.assertEqual(
             transition_level(self.airport, self.transition, metar),
             expected)
+
+    @data(
+        ('03', ['[AFTER LANDING VACATE VIA HN]']),
+        ('21', ['[AFTER LANDING VACATE VIA HS]', '[MEDIUM AND LIGHT AIRCRAFT EXPECT POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]']),
+        ('35', [])
+    )
+    @unpack
+    def test_arrdepinfo(self, rwy, expected):
+        self.assertEqual(
+            arrdep_info(self.airport, rwy),
+            expected)
+

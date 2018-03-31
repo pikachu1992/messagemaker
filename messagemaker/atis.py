@@ -57,6 +57,15 @@ def transition_level(airport, tl_tbl, metar):
     _, transition_level = TRANSITION_LEVEL[transition_alt][index]
     return template % transition_level
     
+def arrdep_info(airport, rwy):
+    parts = []
+    if rwy not in airport['arrdep_info']:
+        return parts
+    for rwy_message in airport['arrdep_info'][rwy]:
+        parts.append(rwy_message)
+    return parts
+
+
 def message(metar, rwy, letter):
     if len(metar) == 4:
         metar = download_metar(metar)
@@ -68,10 +77,7 @@ def message(metar, rwy, letter):
     parts.append(intro(letter, metar))
     parts.append(approach(rwy, airport))
     parts.append(transition_level(airport, TRANSITION_LEVEL, metar))
-
-    # specific departure and arrival information
-    for rwy_message in airport['arrdep_info'][rwy]:
-        parts.append(rwy_message)
+    parts.append(arrdep_info(airport, rwy))
 
     # wind
     if metar.wind_dir:
