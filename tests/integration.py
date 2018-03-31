@@ -50,5 +50,5 @@ class TestIntegration(unittest.TestCase):
                 self.rwy,
                 self.letter),
             '',
-            'Python Metar module bug, see https://')
+            'Python Metar module bug, see issue #13')
 
