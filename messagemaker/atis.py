@@ -119,6 +119,15 @@ def sky(metar):
                 parts.append('[%s]' % cb.upper())
     return parts
 
+def temperature(metar):
+    return '[TEMP] %d' % metar.temp._value
+
+def dewpoint(metar):
+    return '[DP] %d' % metar.dewpt._value
+
+def qnh(metar):
+    return '[QNH] %d' % metar.press._value
+
 def message(metar, rwy, letter):
     if len(metar) == 4:
         metar = download_metar(metar)
@@ -133,15 +142,9 @@ def message(metar, rwy, letter):
     parts.append(arrdep_info(airport, rwy))
     parts.append(wind(metar))
     parts.append(sky(metar))
-
-    # temperature
-    parts.append('[TEMP] %d' % metar.temp._value)
-
-    # dewpoint
-    parts.append('[DP] %d' % metar.dewpt._value)
-
-    # QNH
-    parts.append('[QNH] %d' % metar.press._value)
+    parts.append(temperature(metar))
+    parts.append(dewpoit(metar))
+    parts.append(qnh(metar))
 
     # general arrival and departure information
     for general_info in airport['general_info']:
