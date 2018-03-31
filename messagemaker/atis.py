@@ -97,22 +97,8 @@ def wind(metar):
         parts.append(part)
     return parts
 
-def message(metar, rwy, letter):
-    if len(metar) == 4:
-        metar = download_metar(metar)
-
-    metar = Metar.Metar(metar)
-    airport = AIRPORT_INFO[metar.station_id]
+def sky(metar):
     parts = []
-
-    parts.append(intro(letter, metar))
-    parts.append(approach(rwy, airport))
-    parts.append(transition_level(airport, TRANSITION_LEVEL, metar))
-    parts.append(arrdep_info(airport, rwy))
-    parts.append(wind(metar))
-    
-    # sky conditions
-    print(metar.vis)
     if str(metar.vis) == '10000 meters':
         parts.append('[CAVOK]')
     else:
@@ -131,6 +117,22 @@ def message(metar, rwy, letter):
             parts.append('[%s] {%d} [FT]' % (cover, height._value))
             if cb:
                 parts.append('[%s]' % cb.upper())
+    return parts
+
+def message(metar, rwy, letter):
+    if len(metar) == 4:
+        metar = download_metar(metar)
+
+    metar = Metar.Metar(metar)
+    airport = AIRPORT_INFO[metar.station_id]
+    parts = []
+
+    parts.append(intro(letter, metar))
+    parts.append(approach(rwy, airport))
+    parts.append(transition_level(airport, TRANSITION_LEVEL, metar))
+    parts.append(arrdep_info(airport, rwy))
+    parts.append(wind(metar))
+    parts.append(sky(metar))
 
     # temperature
     parts.append('[TEMP] %d' % metar.temp._value)
