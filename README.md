@@ -1,4 +1,4 @@
-# messagemaker [![Build Status](https://travis-ci.org/pedro2555/message-maker.svg?branch=master)](https://travis-ci.org/pedro2555/message-maker)
+# messagemaker [![Build Status](https://travis-ci.org/pedro2555/messagemaker.svg?branch=master)](https://travis-ci.org/pedro2555/messagemaker)
 
 * Free software: GPLv2
 
