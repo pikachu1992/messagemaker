@@ -1,20 +1,21 @@
 """
-messagemaker
+Message Maker
+
 Copyright (C) 2018  Pedro Rodrigues <prodrigues1990@gmail.com>
 
 This file is part of messagemaker.
 
-messagemaker is free software: you can redistribute it and/or modify
+Message Maker is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, version 2 of the License.
 
-messagemaker is distributed in the hope that it will be useful,
+Message Maker is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with messagemaker.  If not, see <http://www.gnu.org/licenses/>.
+along with Message Maker.  If not, see <http://www.gnu.org/licenses/>.
 """
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -53,20 +54,20 @@ class TestLpptAtis(unittest.TestCase):
         self.assertEqual(approach(rwy, self.airport), expected)
 
     @data(
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q942', '[TL] 75'),
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q943', '[TL] 70'),
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q959', '[TL] 70'),
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q960', '[TL] 65'),
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q976', '[TL] 65'),
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q978', '[TL] 60'),
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q994', '[TL] 60'),
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q996', '[TL] 55'),
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1013', '[TL] 55'),
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1014', '[TL] 50'),
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1031', '[TL] 50'),
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1032', '[TL] 45'),
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1050', '[TL] 45'),
-        ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1051', '[TL] 40'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q942', '[TL] 75'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q943', '[TL] 70'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q959', '[TL] 70'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q960', '[TL] 65'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q976', '[TL] 65'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q978', '[TL] 60'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q994', '[TL] 60'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q996', '[TL] 55'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q1013', '[TL] 55'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q1014', '[TL] 50'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q1031', '[TL] 50'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q1032', '[TL] 45'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q1050', '[TL] 45'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q1051', '[TL] 40'),
     )
     @unpack
     def test_transitionlevel(self, metar, expected):
@@ -88,12 +89,20 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
             expected)
 
     @data(
-        ('METAR LPPT 191800Z 35015KT 9999 11/06 Q1016', '[WND] 350 [DEG] 15 [KT]'),
-        ('METAR LPPT 191800Z 35015KT 350V010 9999 11/06 Q1016', '[WND] 350 [DEG] 15 [KT] [VRB BTN] 350 [AND] 010 [DEG]'),
-        ('METAR LPPT 191800Z 35015G20KT 9999 11/06 Q1016', '[WND] 350 [DEG] 15 [KT] [MAX] 20 [KT]'),
-        ('METAR LPPT 191800Z 35015G20KT 350V010 9999 11/06 Q1016', '[WND] 350 [DEG] 15 [KT] [MAX] 20 [KT] [VRB BTN] 350 [AND] 010 [DEG]'),
-        ('METAR LPPT 191800Z 00000KT 9999 11/06 Q1016', '[WND] [CALM]'),
-        ('METAR LPPT 191800Z VRB04KT 9999 11/06 Q1016', '[WND] [VRB] 4 [KT]')
+        ('METAR LPPT 191800Z 35015KT 9999 11/06 Q1016',
+        '[WND] 350 [DEG] 15 [KT]'),
+        ('METAR LPPT 191800Z 35015KT 350V010 9999 11/06 Q1016',
+        '[WND] 350 [DEG] 15 [KT] [VRB BTN] 350 [AND] 010 [DEG]'),
+        ('METAR LPPT 191800Z 35015G20KT 9999 11/06 Q1016',
+        '[WND] 350 [DEG] 15 [KT] [MAX] 20 [KT]'),
+        ('METAR LPPT 191800Z 35015G20KT 350V010 9999 11/06 Q1016',
+        '[WND] 350 [DEG] 15 [KT] [MAX] 20 [KT] [VRB BTN] 350 [AND] 010 [DEG]'),
+        ('METAR LPPT 191800Z 00000KT 9999 11/06 Q1016',
+        '[WND] [CALM]'),
+        ('METAR LPPT 191800Z VRB04KT 9999 11/06 Q1016',
+        '[WND] [VRB] 4 [KT]'),
+        ('METAR LPPT 191800Z VRB04G10KT 9999 11/06 Q1016',
+        '[WND] [VRB] 4 [KT] [MAX] 10 [KT]')
     )
     @unpack
     def test_wind(self, metar, expected):

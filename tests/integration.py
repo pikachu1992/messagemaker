@@ -34,7 +34,7 @@ class TestIntegration(unittest.TestCase):
         self.transition = settings.TRANSITION
         self.letter = 'A'
         self.rwy = '03'
-    
+
     @data(
         ('METAR LPPT 191800Z 35015KT 9999 SCT027 11/06 Q1016', '03')
     )
@@ -51,4 +51,3 @@ class TestIntegration(unittest.TestCase):
                 self.letter),
             '',
             'Python Metar module bug, see issue #13')
-
