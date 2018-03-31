@@ -63,7 +63,7 @@ def arrdep_info(airport, rwy):
         return parts
     for rwy_message in airport['arrdep_info'][rwy]:
         parts.append(rwy_message)
-    return parts
+    return ' '.join(parts)
 
 def wind(metar):
     parts = []
@@ -95,7 +95,7 @@ def wind(metar):
             direction_to='%03d' % metar.wind_dir_to._degrees
         )
         parts.append(part)
-    return parts
+    return ' '.join(parts)
 
 def sky(metar):
     parts = []
@@ -117,7 +117,7 @@ def sky(metar):
             parts.append('[%s] {%d} [FT]' % (cover, height._value))
             if cb:
                 parts.append('[%s]' % cb.upper())
-    return parts
+    return ' '.join(parts)
 
 def temperature(metar):
     return '[TEMP] %d' % metar.temp._value
@@ -143,7 +143,7 @@ def message(metar, rwy, letter):
     parts.append(wind(metar))
     parts.append(sky(metar))
     parts.append(temperature(metar))
-    parts.append(dewpoit(metar))
+    parts.append(dewpoint(metar))
     parts.append(qnh(metar))
 
     # general arrival and departure information
