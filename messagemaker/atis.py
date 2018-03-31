@@ -58,9 +58,9 @@ def transition_level(airport, tl_tbl, metar):
     return template % transition_level
     
 def arrdep_info(airport, rwy):
-    parts = []
     if rwy not in airport['arrdep_info']:
-        return parts
+        return ''
+    parts = []
     for rwy_message in airport['arrdep_info'][rwy]:
         parts.append(rwy_message)
     return ' '.join(parts)
