@@ -114,9 +114,10 @@ def sky(metar):
             parts.append('[CLD]')
         for sky in metar.sky:
             cover, height, cb = sky
-            parts.append('[%s] {%d} [FT]' % (cover, height._value))
+            parts.append('[%s]' % cover)
             if cb:
                 parts.append('[%s]' % cb.upper())
+            parts.append('{%d} [FT]' % height._value)
     return ' '.join(parts)
 
 def temperature(metar):
