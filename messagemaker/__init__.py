@@ -63,7 +63,7 @@ AIRPORT_INFO = {
     },
     'LPPR': {
         'approaches': {
-            '17': 'ILS', # é substituído em [EXP <aqui> APCH]
+            '17': 'ILS DME', # é substituído em [EXP <aqui> APCH]
             '35': 'R-NAV'
         },
        'arrdep_info': {
