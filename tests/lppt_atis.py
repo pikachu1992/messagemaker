@@ -89,6 +89,19 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
             expected)
 
     @data(
+        (
+            # this a real world scenario, refer to:
+#   https://github.com/pedro2555/messagemaker/files/1867151/LPPT.ATIS.O.zip
+            ('119.1', '118.1'),
+            ['[GND] [AND] [DEL] [FREQ CLOSED] [FOR DEPARTURE CLEARENCE CONTACT\
+ [TWR] 118.100']),
+    )
+    @unpack
+    @unittest.expectedFailure
+    def test_clrfreq(self, freqs, expected):
+        self.assertEqual(clrfreq_info(freqs), expected, 'issue #10')
+
+    @data(
         ('METAR LPPT 191800Z 35015KT 9999 11/06 Q1016',
         '[WND] 350 [DEG] 15 [KT]'),
         ('METAR LPPT 191800Z 35015KT 350V010 9999 11/06 Q1016',
