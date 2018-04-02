@@ -82,6 +82,11 @@ class TestLpptAtis(unittest.TestCase):
 #   https://github.com/pedro2555/messagemaker/files/1867151/LPPT.ATIS.O.zip
             ('125.55', '119.1'),
             '[AFTER DEPARTURE CONTACT] [APPROACH] 119.1'),
+        (
+            # this a real world scenario, refer to:
+# https://github.com/pedro2555/messagemaker/files/1862755/LPPT280320181730.zip
+            ('125.55', '125.125', '119.1'),
+            '[AFTER DEPARTURE CONTACT] 125.125'),
     )
     @unpack
     @unittest.expectedFailure
@@ -106,10 +111,16 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
     @data(
         (
             # this a real world scenario, refer to:
-#   https://github.com/pedro2555/messagemaker/files/1867151/LPPT.ATIS.O.zip
+# https://github.com/pedro2555/messagemaker/files/1867151/LPPT.ATIS.O.zip
             ('119.1', '118.1'),
-            '[GND] [AND] [DEL] [FREQ CLOSED] [FOR DEPARTURE CLEARENCE CONTACT\
- [TWR] 118.100'),
+            '[GND] [AND] [DEL] [FREQ CLOSED] [FOR DEPARTURE CLEARANCE CONTACT \
+[TWR] 118.100'),
+        (
+             # this a real world scenario, refer to:
+ # https://github.com/pedro2555/messagemaker/files/1862755/LPPT280320181730.zip
+            ('119.1', '118.1', '121.75'),
+            '[DEL] [FREQ CLOSED] [FOR DEPARTURE CLEARANCE CONTACT] [GND] \
+121.750'),
     )
     @unpack
     @unittest.expectedFailure
