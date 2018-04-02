@@ -181,12 +181,22 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         ('METAR LPPT 191800Z 35015KT FEW030 11/06 Q1016',
         '[CLD] [FEW] {3000} [FT]'),
         ('METAR LPPT 191800Z 35015KT FEW100 11/06 Q1016',
-        '[CLD] [FEW] {10000} [FT]')
+        '[CLD] [FEW] {10000} [FT]'),
     )
     @unpack
     def test_sky(self, metar, expected):
         metar = Metar.Metar(metar)
         self.assertEqual(sky(metar), expected)
+
+    @data(
+        ('METAR LPPT 191800Z 35015KT VV001 11/06 Q1016',
+        '[VV] {100} [FT]'),
+    )
+    @unpack
+    @unittest.expectedFailure
+    def test_sky(self, metar, expected):
+        metar = Metar.Metar(metar)
+        self.assertEqual(sky(metar), expected, 'issue #20')
 
     @data(
         ('METAR LPPT 191800Z 35015KT FEW000 11/06 Q1016',
