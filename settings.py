@@ -43,9 +43,48 @@ UNABLE ADVISE BEFORE TAXI]',
     ],
     'transition_altitude': '4000'
 }
+LPFR = {
+    'approaches': {
+        '10': 'R-NAV', # é substituído em [EXP <aqui> APCH]
+        '28': 'ILS'
+    },
+    'arrdep_info': {
+        '10': [],
+        '28': []
+    },
+    'general_info': [],
+    'transition_altitude': '4000'
+}
+LPPR = {
+    'approaches': {
+        '17': 'ILS DME', # é substituído em [EXP <aqui> APCH]
+        '35': 'R-NAV'
+    },
+   'arrdep_info': {
+        '17': [],
+        '35': []
+    },
+    'general_info': [],
+    'transition_altitude': '4000'
+}
+LPMA = {
+    'approaches': {
+        '05': 'VOR DME', # é substituído em [EXP <aqui> APCH]
+        '23': 'VOR DME'
+    },
+    'arrdep_info': {
+        '05': [],
+        '23': []
+    },
+    'general_info': [],
+    'transition_altitude': '5000'
+}
 
 AIRPORTS = {
-    'LPPT': LPPT
+    'LPPT': LPPT,
+    'LPFR': LPFR,
+    'LPPR': LPPR,
+    'LPMA': LPMA
 }
 
 TRANSITION = {

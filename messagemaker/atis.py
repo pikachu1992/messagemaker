@@ -24,14 +24,15 @@ from metar import Metar
 from messagemaker import *
 from bisect import bisect_right
 import requests
+import traceback
 
 
-def message_try(metar, rwy, letter):
+def message_try(metar, rwy, letter, airports, tl_tbl):
     response = None
     try:
-        response = message(metar, rwy, letter)
+        response = message(metar, rwy, letter, airports, tl_tbl)
     except Exception as crap:
-        print(crap)
+        print(traceback.format_exc())
 
     return '[ATIS OUT OF SERVICE]' if response is None else response
 
@@ -129,17 +130,17 @@ def dewpoint(metar):
 def qnh(metar):
     return '[QNH] %d' % metar.press._value
 
-def message(metar, rwy, letter):
+def message(metar, rwy, letter, airports, tl_tbl):
     if len(metar) == 4:
         metar = download_metar(metar)
 
     metar = Metar.Metar(metar)
-    airport = AIRPORT_INFO[metar.station_id]
+    airport = airports[metar.station_id]
     parts = []
 
     parts.append(intro(letter, metar))
     parts.append(approach(rwy, airport))
-    parts.append(transition_level(airport, TRANSITION_LEVEL, metar))
+    parts.append(transition_level(airport, tl_tbl, metar))
     parts.append(arrdep_info(airport, rwy))
     parts.append(wind(metar))
     parts.append(sky(metar))

@@ -40,7 +40,14 @@ class TestIntegration(unittest.TestCase):
     )
     @unpack
     def test_message_doesnotfail(self, metar, rwy):
-        self.assertNotEqual(message(metar, rwy, self.letter), '')
+        self.assertNotEqual(
+            message(
+                metar,
+                rwy,
+                self.letter,
+                settings.AIRPORTS,
+                settings.TRANSITION),
+            '')
 
     @unittest.expectedFailure
     def test_message_windshear_doesnotfail(self):
