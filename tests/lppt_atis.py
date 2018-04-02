@@ -77,6 +77,18 @@ class TestLpptAtis(unittest.TestCase):
             expected)
 
     @data(
+        (
+            # this a real world scenario, refer to:
+#   https://github.com/pedro2555/messagemaker/files/1867151/LPPT.ATIS.O.zip
+            ('125.55', '119.1'),
+            '[AFTER DEPARTURE CONTACT] [APPROACH] 119.1'),
+    )
+    @unpack
+    @unittest.expectedFailure
+    def test_depfreq(self, freqs, expected):
+        self.assertEqual(depfreq_info(freqs), expected, 'issue #10')
+
+    @data(
         ('03', '[AFTER LANDING VACATE VIA HN]'),
         ('21', '[AFTER LANDING VACATE VIA HS] [MEDIUM AND LIGHT AIRCRAFT EXPEC\
 T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
@@ -93,8 +105,8 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
             # this a real world scenario, refer to:
 #   https://github.com/pedro2555/messagemaker/files/1867151/LPPT.ATIS.O.zip
             ('119.1', '118.1'),
-            ['[GND] [AND] [DEL] [FREQ CLOSED] [FOR DEPARTURE CLEARENCE CONTACT\
- [TWR] 118.100']),
+            '[GND] [AND] [DEL] [FREQ CLOSED] [FOR DEPARTURE CLEARENCE CONTACT\
+ [TWR] 118.100'),
     )
     @unpack
     @unittest.expectedFailure
