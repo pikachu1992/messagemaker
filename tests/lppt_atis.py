@@ -123,24 +123,20 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
 121.750'),
         (
            ('119.1', '118.1', '118.95'),
-           '[GND] [FREQ CLOSED] [FOR DEPARTURE CLEARANCE CONTACT] [DEL] \
-118.950'),
+           '[FOR DEPARTURE CLEARANCE CONTACT] [DEL] 118.950'),
         (
            ('119.1', '121.75', '118.95'),
-           '[TWR] [FREQ CLOSED] [FOR DEPARTURE CLEARANCE CONTACT] [DEL] \
-118.950'),
+           '[FOR DEPARTURE CLEARANCE CONTACT] [DEL] 118.950'),
         (
            ('119.1', '118.1', '121.75', '118.95'),
-           '[FOR DEPARTURE CLEARANCE CONTACT] [DEL] \
-118.950'),
+           '[FOR DEPARTURE CLEARANCE CONTACT] [DEL] 118.950'),
         (
             ('118.1', '121.75'),
-            ''
-        ),
+            '[DEL] [FREQ CLOSED] [FOR DEPARTURE CLEARANCE CONTACT] [GND] \
+121.750'),
         (
             ('118.1', '118.95'),
-            ''
-        ),
+            '[FOR DEPARTURE CLEARANCE CONTACT] [DEL] 118.950'),
     )
     @unpack
     @unittest.expectedFailure
