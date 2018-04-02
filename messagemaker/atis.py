@@ -54,9 +54,9 @@ def transition_level(airport, tl_tbl, metar):
     index = bisect_right(
         tl_tbl[transition_alt],
         (metar.press._value,))
-    _, transition_level = TRANSITION_LEVEL[transition_alt][index]
+    _, transition_level = tl_tbl[transition_alt][index]
     return template % transition_level
-    
+
 def arrdep_info(airport, rwy):
     if rwy not in airport['arrdep_info']:
         return ''
