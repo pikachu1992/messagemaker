@@ -23,7 +23,7 @@ import unittest
 from ddt import ddt, data, unpack
 from metar import Metar
 
-from messagemaker.atis import *
+from messagemaker.message import *
 import settings
 
 @ddt

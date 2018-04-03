@@ -20,7 +20,7 @@ along with Message Maker.  If not, see <http://www.gnu.org/licenses/>.
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from flask import Flask, request
-from messagemaker import atis
+from messagemaker.message import message_try
 import settings
 import os
 
@@ -33,7 +33,7 @@ def hello_world():
     letter = request.args.get('letter')
 
     if metar and rwy and letter:
-        return atis.message_try(
+        return message_try(
             metar,
             rwy,
             letter,
