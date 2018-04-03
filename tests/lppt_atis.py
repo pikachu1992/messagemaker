@@ -198,6 +198,10 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         '[CLD] [FEW] {3000} [FT]'),
         ('METAR LPPT 191800Z 35015KT FEW100 11/06 Q1016',
         '[CLD] [FEW] {10000} [FT]'),
+        ('METAR LPPT 191800Z 35015KT FEW040TCU 11/06 Q1016',
+        '[CLD] [FEW] [TCU] {4000} [FT]'),
+        ('METAR LPPT 191800Z 35015KT FEW020CB 11/06 Q1016',
+        '[CLD] [FEW] [CB] {2000} [FT]'),
         ('METAR LPPT 191800Z 35015KT VV001 11/06 Q1016',
         '[VV] {100} [FT]'),
     )
@@ -215,17 +219,6 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
     def test_sky_gndlevel(self, metar, expected):
         metar = Metar.Metar(metar)
         self.assertEqual(sky(metar), expected, 'see: issue#15')
-
-    @data(
-        ('METAR LPPT 191800Z 35015KT FEW040TCU 11/06 Q1016',
-        '[CLD] [FEW] [TCU] {4000} [FT]'),
-        ('METAR LPPT 191800Z 35015KT FEW020CB 11/06 Q1016',
-        '[CLD] [FEW] [CB] {2000} [FT]')
-    )
-    @unpack
-    def test_sky_tcucb(self, metar, expected):
-        metar = Metar.Metar(metar)
-        self.assertEqual(sky(metar), expected, 'see: issue#14')
 
     @data(
         ('METAR LPPT 191800Z 35015KT 10/05 Q1016', '[TEMP] 10'),
