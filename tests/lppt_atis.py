@@ -160,7 +160,7 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         ('METAR LPPT 191800Z VRB04KT 9999 11/06 Q1016',
         '[WND] [VRB] 4 [KT]'),
         ('METAR LPPT 191800Z VRB04G10KT 9999 11/06 Q1016',
-        '[WND] [VRB] 4 [KT] [MAX] 10 [KT]')
+        '[WND] [VRB] 4 [KT] [MAX] 10 [KT]'),
     )
     @unpack
     def test_wind(self, metar, expected):
