@@ -168,6 +168,22 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         self.assertEqual(wind(metar), expected)
 
     @data(
+        ('METAR LPPT 191800Z 35015KT RA 11/06 Q1016',
+        '[RAIN]'),
+        ('METAR LPPT 191800Z 35015KT SHRA 11/06 Q1016',
+        '[SHOWERS OF RAIN]'),
+        ('METAR LPPT 191800Z 35015KT -RA 11/06 Q1016',
+        '[FEEBLE] [RAIN]'),
+        ('METAR LPPT 191800Z 35015KT -SHRA 11/06 Q1016',
+        '[FEEBLE] [SHOWERS OF RAIN]'),
+    )
+    @unpack
+    @unittest.expectedFailure
+    def test_precip(self, metar, expected):
+        metar = Metar.Metar(metar)
+        self.assertEqual(precip(metar), expected, 'issue #16')
+
+    @data(
         ('METAR LPPT 191800Z 35015KT 11/06 Q1016',
         ''),
         ('METAR LPPT 191800Z 35015KT FEW003 11/06 Q1016',
