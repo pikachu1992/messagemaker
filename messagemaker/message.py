@@ -111,7 +111,8 @@ def sky(metar):
         if str(metar.vis) == 'greater than 10000 meters':
             parts.append('[VIS] 10[KM]')
         ## clouds
-        if metar.sky:
+        clouds = [c for c in metar.sky if c[0] in ('FEW', 'SCT', 'BKN', 'OVC')]
+        if len(clouds) > 0:
             parts.append('[CLD]')
         for sky in metar.sky:
             cover, height, cb = sky
