@@ -168,6 +168,15 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         self.assertEqual(wind(metar), expected)
 
     @data(
+        ('METAR LPPT 191800Z 36010KT 9999 11/06 Q1016',
+        '[VIS] 10[KM]'),
+    )
+    @unpack
+    def test_vis(self, metar, expected):
+        metar = Metar.Metar(metar)
+        self.assertEqual(sky(metar), expected)
+
+    @data(
         ('METAR LPPT 191800Z 35015KT RA 11/06 Q1016',
         '[RAIN]'),
         ('METAR LPPT 191800Z 35015KT SHRA 11/06 Q1016',
