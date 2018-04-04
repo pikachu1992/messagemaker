@@ -181,22 +181,26 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         '[VIS] 9[KM]'),
         ('METAR LPPT 191800Z 36010KT 8000 11/06 Q1016',
         '[VIS] 8[KM]'),
-        ('METAR LPPT 191800Z 36010KT 2000 11/06 Q1016',
-        '[VIS] 2[KM]'),
+        ('METAR LPPT 191800Z 36010KT 5000 11/06 Q1016',
+        '[VIS] 5[KM]'),
+        ('METAR LPPT 191800Z 36010KT 4000 11/06 Q1016',
+        '[VIS] 4000[MTS]'),
         ('METAR LPPT 191800Z 36010KT 1000 11/06 Q1016',
-        '[VIS] 1[KM]'),
+        '[VIS] 1000[MTS]'),
+        ('METAR LPPT 191800Z 36010KT 0600 11/06 Q1016',
+        '[VIS] 600[MTS]'),
     )
     @unpack
     @unittest.expectedFailure
     def test_vis_issue22(self, metar, expected):
         metar = Metar.Metar(metar)
         self.assertEqual(sky(metar), expected, 'issue #22')
-    
+
     @data(
         ('METAR LPPT 191800Z 35015KT RA 11/06 Q1016',
-        '[RAIN]'),
+        '[MOD] [RAIN]'),
         ('METAR LPPT 191800Z 35015KT SHRA 11/06 Q1016',
-        '[SHOWERS OF RAIN]'),
+        '[MOD] [SHOWERS OF RAIN]'),
         ('METAR LPPT 191800Z 35015KT -RA 11/06 Q1016',
         '[FEEBLE] [RAIN]'),
         ('METAR LPPT 191800Z 35015KT -SHRA 11/06 Q1016',
