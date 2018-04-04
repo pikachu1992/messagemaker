@@ -184,11 +184,11 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         ('METAR LPPT 191800Z 36010KT 5000 11/06 Q1016',
         '[VIS] 5[KM]'),
         ('METAR LPPT 191800Z 36010KT 4000 11/06 Q1016',
-        '[VIS] 4000[MTS]'),
+        '[VIS] {4000}[MTS]'),
         ('METAR LPPT 191800Z 36010KT 1000 11/06 Q1016',
-        '[VIS] 1000[MTS]'),
+        '[VIS] {1000}[MTS]'),
         ('METAR LPPT 191800Z 36010KT 0600 11/06 Q1016',
-        '[VIS] 600[MTS]'),
+        '[VIS] {600}[MTS]'),
     )
     @unpack
     @unittest.expectedFailure
