@@ -204,9 +204,9 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         ('METAR LPPT 050820Z 12006KT 0400 RADZ FG VV002 04/03 Q1005',
         '[MOD] [RADZ] [FG]'),
         ('METAR LPPT 050820Z 12006KT 0400 -DZ PRFG VV002 04/03 Q1005',
-        '[FEEBLE] [DZ] [PRFG]')
+        '[FEEBLE] [DZ] [PRFG]'),
         ('METAR LPPT 050820Z 12006KT 0400 -DZ BCFG VV002 04/03 Q1005',
-        '[FEEBLE] [DZ] [BCFG]')
+        '[FEEBLE] [DZ] [BCFG]'),
     )
     @unpack
     @unittest.expectedFailure
