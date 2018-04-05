@@ -168,6 +168,8 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         self.assertEqual(wind(metar), expected)
 
     @data(
+        ('METAR LPPT 191800Z 36010KT CAVOK 11/06 Q1016',
+        '[CAVOK]'),
         ('METAR LPPT 191800Z 36010KT 9999 11/06 Q1016',
         '[VIS] 10[KM]'),
         ('METAR LPPT 191800Z 36010KT 9000 11/06 Q1016',
