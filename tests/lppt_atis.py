@@ -191,7 +191,6 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         '[VIS] {600}[MTS]'),
     )
     @unpack
-    @unittest.expectedFailure
     def test_vis_issue22(self, metar, expected):
         metar = Metar.Metar(metar)
         self.assertEqual(sky(metar), expected, 'issue #22')
