@@ -170,13 +170,6 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
     @data(
         ('METAR LPPT 191800Z 36010KT 9999 11/06 Q1016',
         '[VIS] 10[KM]'),
-    )
-    @unpack
-    def test_vis(self, metar, expected):
-        metar = Metar.Metar(metar)
-        self.assertEqual(sky(metar), expected)
-
-    @data(
         ('METAR LPPT 191800Z 36010KT 9000 11/06 Q1016',
         '[VIS] 9[KM]'),
         ('METAR LPPT 191800Z 36010KT 8000 11/06 Q1016',
@@ -191,9 +184,9 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         '[VIS] {600}[MTS]'),
     )
     @unpack
-    def test_vis_issue22(self, metar, expected):
+    def test_vis(self, metar, expected):
         metar = Metar.Metar(metar)
-        self.assertEqual(sky(metar), expected, 'issue #22')
+        self.assertEqual(sky(metar), expected)
 
     @data(
         ('METAR LPPT 191800Z 35015KT RA 11/06 Q1016',
