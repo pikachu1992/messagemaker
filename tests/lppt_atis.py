@@ -199,28 +199,44 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
     @data(
         ('METAR LPPT 191800Z 35015KT RA 11/06 Q1016',
         '[MOD] [RAIN]'),
-        ('METAR LPPT 191800Z 35015KT SHRA 11/06 Q1016',
-        '[MOD] [SHOWERS OF RAIN]'),
         ('METAR LPPT 191800Z 35015KT -RA 11/06 Q1016',
         '[FEEBLE] [RAIN]'),
+        ('METAR LPPT 191800Z 35015KT +RA 11/06 Q1016',
+        '[HEAVY] [RAIN]'),
+        ('METAR LPPT 191800Z 35015KT SHRA 11/06 Q1016',
+        '[MOD] [SHOWERS OF] [RAIN]'),
         ('METAR LPPT 191800Z 35015KT -SHRA 11/06 Q1016',
-        '[FEEBLE] [SHOWERS OF RAIN]'),
+        '[FEEBLE] [SHOWERS OF] [RAIN]'),
+        ('METAR LPPT 191800Z 35015KT +SHRA 11/06 Q1016',
+        '[HEAVY] [SHOWERS OF] [RAIN]'),
+        ('METAR LPPT 050820Z 12006KT 0400 FG VV002 04/03 Q1005',
+        '[FOG]'),
+        ('METAR LPPT 050820Z 12006KT 0400 PRFG VV002 04/03 Q1005',
+        '[PARTIAL] [FOG]'),
         ('METAR LPPT 050820Z 12006KT 0400 RADZ FG VV002 04/03 Q1005',
-        '[MOD] [RADZ] [FG]'),
+        '[MOD] [RAIN AND DRIZZLE] [FOG]'),
         ('METAR LPPT 050820Z 12006KT 0400 -DZ PRFG VV002 04/03 Q1005',
-        '[FEEBLE] [DZ] [PRFG]'),
+        '[FEEBLE] [DRIZZLE] [PARTIAL] [FOG]'),
         ('METAR LPPT 050820Z 12006KT 0400 -DZ BCFG VV002 04/03 Q1005',
-        '[FEEBLE] [DZ] [BCFG]'),
+        '[FEEBLE] [DRIZZLE] [PATCHES OF] [FOG]'),
         ('METAR LPPT 191800Z 35015KT BR 11/06 Q1016',
-        '[BR]'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q1016 RERA',
-        '[RE][RA]'),
+        '[MIST]'),
     )
     @unpack
-    @unittest.expectedFailure
+    #@unittest.expectedFailure
     def test_precip(self, metar, expected):
         metar = Metar.Metar(metar)
         self.assertEqual(precip(metar), expected, 'issue #16')
+
+    # @data(
+    #     ('METAR LPPT 191800Z 35015KT 11/06 Q1016 RERA',
+    #     '[RE][RA]'),
+    # )
+    # @unpack
+    # @unittest.expectedFailure
+    # def test_precip(self, metar, expected):
+    #     metar = Metar.Metar(metar)
+    #     self.assertEqual(precip(metar), expected, 'issue #')
 
     @data(
         ('METAR LPPT 191800Z 35015KT 11/06 Q1016',

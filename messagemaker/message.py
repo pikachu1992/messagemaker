@@ -98,6 +98,49 @@ def wind(metar):
         parts.append(part)
     return ' '.join(parts)
 
+def precip(metar):
+    if not metar.weather:
+        return ''
+
+    parts = []
+    for weather in metar.weather:
+        intensity, description, precipitation, obscuration, other = weather
+        print(weather)
+
+        # do the intensity of the precipitation first
+        if intensity is not None and precipitation:
+            if intensity == '':
+                parts.append('[MOD]')
+            elif intensity == '-':
+                parts.append('[FEEBLE]')
+            elif intensity == '+':
+                parts.append('[HEAVY]')
+
+        if description:
+            if description == 'SH':
+                parts.append('[SHOWERS OF]')
+            elif description == 'BC':
+                parts.append('[PATCHES OF]')
+            elif description == 'PR':
+                parts.append('[PARTIAL]')
+
+        if precipitation:
+            # do the actual percipitation
+            if precipitation == 'RA':
+                parts.append('[RAIN]')
+            if precipitation == 'DZ':
+                parts.append('[DRIZZLE]')
+            if precipitation == 'RADZ':
+                parts.append('[RAIN AND DRIZZLE]')
+
+        if obscuration:
+            if obscuration == 'FG':
+                parts.append('[FOG]')
+            if obscuration == 'BR':
+                parts.append('[MIST]')
+
+    return ' '.join(parts)
+
 def sky(metar):
     parts = []
     if str(metar.vis) == '10000 meters':
