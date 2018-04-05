@@ -112,7 +112,7 @@ def sky(metar):
             # calculate units, see issue #22
             vis = '{%d}' % int(metar.vis._value)
             units = 'MTS'
-            if metar.vis._value > 4000:
+            if metar.vis._value >= 5000:
                 vis = '%d' % int(metar.vis._value / 1000)
                 units = 'KM'
             parts.append('[VIS] %s[%s]' % (vis, units))
