@@ -186,6 +186,8 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         '[VIS] {600}[MTS]'),
         ('METAR LPPT 191800Z 36010KT 0550 11/06 Q1016',
         '[VIS] 550[MTS]'),
+        ('METAR LPPT 191800Z 36010KT 0250 11/06 Q1016',
+        '[VIS] 250[MTS]'),
     )
     @unpack
     def test_vis(self, metar, expected):
@@ -201,6 +203,16 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         '[FEEBLE] [RAIN]'),
         ('METAR LPPT 191800Z 35015KT -SHRA 11/06 Q1016',
         '[FEEBLE] [SHOWERS OF RAIN]'),
+        ('METAR LPPT 050820Z 12006KT 0400 RADZ FG VV002 04/03 Q1005',
+        '[MOD] [RADZ] [FG]'),
+        ('METAR LPPT 050820Z 12006KT 0400 -DZ PRFG VV002 04/03 Q1005',
+        '[FEEBLE] [DZ] [PRFG]'),
+        ('METAR LPPT 050820Z 12006KT 0400 -DZ BCFG VV002 04/03 Q1005',
+        '[FEEBLE] [DZ] [BCFG]'),
+        ('METAR LPPT 191800Z 35015KT BR 11/06 Q1016',
+        '[BR]'),
+        ('METAR LPPT 191800Z 35015KT 11/06 Q1016 RERA',
+        '[RE][RA]'),
     )
     @unpack
     @unittest.expectedFailure
@@ -229,6 +241,8 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         '[CLD] [FEW] [CB] {2000} [FT]'),
         ('METAR LPPT 191800Z 35015KT VV001 11/06 Q1016',
         '[VV] {100} [FT]'),
+        ('METAR LPPT 191800Z 35015KT VV000 11/06 Q1016',
+        '[VV] {0} [FT]'),
     )
     @unpack
     def test_sky(self, metar, expected):
@@ -237,7 +251,7 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
 
     @data(
         ('METAR LPPT 191800Z 35015KT FEW000 11/06 Q1016',
-        '[CLD] [FEW] {000} [FT]')
+        '[CLD] [FEW] {0} [FT]')
     )
     @unpack
     @unittest.expectedFailure
