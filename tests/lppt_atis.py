@@ -184,6 +184,8 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         '[VIS] {1000}[MTS]'),
         ('METAR LPPT 191800Z 36010KT 0600 11/06 Q1016',
         '[VIS] {600}[MTS]'),
+        ('METAR LPPT 191800Z 36010KT 0550 11/06 Q1016',
+        '[VIS] 550[MTS]'),
     )
     @unpack
     def test_vis(self, metar, expected):
