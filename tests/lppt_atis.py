@@ -254,7 +254,6 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         '[CLD] [FEW] {0} [FT]')
     )
     @unpack
-    @unittest.expectedFailure
     def test_sky_gndlevel(self, metar, expected):
         metar = Metar.Metar(metar)
         self.assertEqual(sky(metar), expected, 'see: issue#15')

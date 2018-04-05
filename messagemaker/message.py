@@ -110,11 +110,13 @@ def sky(metar):
         #   4000M 3000M ..
         if metar.vis:
             # calculate units, see issue #22
-            vis = '{%d}' % int(metar.vis._value)
+            vis = int(metar.vis._value)
             units = 'MTS'
             if metar.vis._value >= 5000:
-                vis = '%d' % int(metar.vis._value / 1000)
+                vis = int(metar.vis._value / 1000)
                 units = 'KM'
+            if vis % 100 == 0:
+                vis = '{%d}' % vis
             parts.append('[VIS] %s[%s]' % (vis, units))
         ## clouds
         clouds = [c for c in metar.sky if c[0] in ('FEW', 'SCT', 'BKN', 'OVC')]
