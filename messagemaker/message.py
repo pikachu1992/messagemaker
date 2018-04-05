@@ -108,8 +108,14 @@ def sky(metar):
         #   5KM 6KM 7KM .. 10KM
         # below 5 km visibility is given in meters:
         #   4000M 3000M ..
-        if str(metar.vis) == 'greater than 10000 meters':
-            parts.append('[VIS] 10[KM]')
+        if metar.vis:
+            # calculate units, see issue #22
+            vis = '{%d}' % int(metar.vis._value)
+            units = 'MTS'
+            if metar.vis._value > 4000:
+                vis = '%d' % int(metar.vis._value / 1000)
+                units = 'KM'
+            parts.append('[VIS] %s[%s]' % (vis, units))
         ## clouds
         clouds = [c for c in metar.sky if c[0] in ('FEW', 'SCT', 'BKN', 'OVC')]
         if len(clouds) > 0:
