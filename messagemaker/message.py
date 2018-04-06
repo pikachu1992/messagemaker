@@ -105,39 +105,32 @@ def precip(metar):
     parts = []
     for weather in metar.weather:
         intensity, description, precipitation, obscuration, other = weather
-        print(weather)
 
         # do the intensity of the precipitation first
         if intensity is not None and precipitation:
             if intensity == '':
                 parts.append('[MOD]')
             elif intensity == '-':
-                parts.append('[FEEBLE]')
+                parts.append('[FBL]')
             elif intensity == '+':
-                parts.append('[HEAVY]')
+                parts.append('[HVY]')
 
-        if description:
-            if description == 'SH':
-                parts.append('[SHOWERS OF]')
-            elif description == 'BC':
-                parts.append('[PATCHES OF]')
-            elif description == 'PR':
-                parts.append('[PARTIAL]')
-
+        joint_part = []
         if precipitation:
-            # do the actual percipitation
-            if precipitation == 'RA':
-                parts.append('[RAIN]')
-            if precipitation == 'DZ':
-                parts.append('[DRIZZLE]')
-            if precipitation == 'RADZ':
-                parts.append('[RAIN AND DRIZZLE]')
+            if description:
+                joint_part.append(description)
+            joint_part.append(precipitation)
+            print('[%s]' % ''.join(joint_part))
+            if len(joint_part) > 0:
+                parts.append('[%s]' % ''.join(joint_part))
 
         if obscuration:
-            if obscuration == 'FG':
-                parts.append('[FOG]')
-            if obscuration == 'BR':
-                parts.append('[MIST]')
+            if description:
+                joint_part.append(description)
+            joint_part.append(obscuration)
+            print('[%s]' % ''.join(joint_part))
+            if len(joint_part) > 0:
+                parts.append('[%s]' % ''.join(joint_part))
 
     return ' '.join(parts)
 
