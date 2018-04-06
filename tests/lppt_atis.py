@@ -77,22 +77,31 @@ class TestLpptAtis(unittest.TestCase):
             expected)
 
     @data(
-        (
-            # this a real world scenario, refer to:
-#   https://github.com/pedro2555/messagemaker/files/1867151/LPPT.ATIS.O.zip
-            ('125.55', '119.1'),
-            '[AFTER DEPARTURE CONTACT] [APPROACH] 119.1'),
-        (
-            # this a real world scenario, refer to:
-# https://github.com/pedro2555/messagemaker/files/1862755/LPPT280320181730.zip
-            ('125.55', '125.125', '119.1'),
-            '[AFTER DEPARTURE CONTACT] 125.125'),
+        ((121.75, 118.95), 118.95),
+        ((118.1, 121.75), 121.75),
+        ((121.75, 118.1), 121.75),
     )
     @unpack
     @unittest.expectedFailure
-    def test_depfreq(self, freqs, expected):
+    def test_findclrfreq(self, onlinefreqs, expected):
+        freq, message = findclrfreq(self.airport, onlinefreq)
         self.assertEqual(
-            depfreq_info(self.airport, freqs),
+            freq,
+            expected,
+            'issue #10')
+
+    @data(
+        ((119.1, 121.75, 118.95), 119.1),
+        ((125.125, 119.1), 125.125),
+        ((125.55, 119.1), 119.1),
+        ((125.55), 125.55)
+    )
+    @unpack
+    @unittest.expectedFailure
+    def test_finddepfreq(self, onlinefreqs, expected):
+        freq, message = finddepfreq(self.airport, onlinefreq)
+        self.assertEqual(
+            freq,
             expected,
             'issue #10')
 
@@ -107,44 +116,6 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         self.assertEqual(
             arrdep_info(self.airport, rwy),
             expected)
-
-    @data(
-        (
-            # this a real world scenario, refer to:
-# https://github.com/pedro2555/messagemaker/files/1867151/LPPT.ATIS.O.zip
-            ('119.1', '118.1'),
-            '[GND] [AND] [DEL] [FREQ CLOSED] [FOR DEPARTURE CLEARANCE CONTACT \
-[TWR] 118.100'),
-        (
-             # this a real world scenario, refer to:
- # https://github.com/pedro2555/messagemaker/files/1862755/LPPT280320181730.zip
-            ('119.1', '118.1', '121.75'),
-            '[DEL] [FREQ CLOSED] [FOR DEPARTURE CLEARANCE CONTACT] [GND] \
-121.750'),
-        (
-           ('119.1', '118.1', '118.95'),
-           '[FOR DEPARTURE CLEARANCE CONTACT] [DEL] 118.950'),
-        (
-           ('119.1', '121.75', '118.95'),
-           '[FOR DEPARTURE CLEARANCE CONTACT] [DEL] 118.950'),
-        (
-           ('119.1', '118.1', '121.75', '118.95'),
-           '[FOR DEPARTURE CLEARANCE CONTACT] [DEL] 118.950'),
-        (
-            ('118.1', '121.75'),
-            '[DEL] [FREQ CLOSED] [FOR DEPARTURE CLEARANCE CONTACT] [GND] \
-121.750'),
-        (
-            ('118.1', '118.95'),
-            '[FOR DEPARTURE CLEARANCE CONTACT] [DEL] 118.950'),
-    )
-    @unpack
-    @unittest.expectedFailure
-    def test_clrfreq(self, freqs, expected):
-        self.assertEqual(
-            clrfreq_info(self.airport, freqs),
-            expected,
-            'issue #10')
 
     @data(
         ('METAR LPPT 191800Z 35015KT 9999 11/06 Q1016',

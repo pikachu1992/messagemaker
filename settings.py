@@ -41,7 +41,21 @@ UNABLE ADVISE BEFORE TAXI]',
     'general_info': [
         '[COMPLY WITH SPEED LIMITATIONS UNLESS OTHERWISE ADVISED BY ATC]'
     ],
-    'transition_altitude': '4000'
+    'transition_altitude': '4000',
+    'clrfreqs': (
+        # freq, contact message, closed message
+        (118.95, 'FOR DEPARTURE CLEARANCE CONTACT DEL 118.950', 'DEL CLOSED'),
+        (121.75, 'DEL FREQ CLOSED FOR DEPARTURE CLEARANCE CONTACT GND 121.750'),
+        (118.1, 'GND AND DEL FREQ CLOSED FOR DEPARTURE CLEARANCE CONTACT \
+TWR 118.100'),
+        (119.1, 'ON THE GROUND CONTACT 119.100'),
+        (125.55, 'ON THE GROUND CONTACT 125.550'),
+    ),
+    'depfreqs': (
+        (125.125, 'AFTER DEPARTURE CONTACT 125.125'),
+        (119.1, 'AFTER DEPARTURE CONTACT 119.1'),
+        (125.55, 'AFTER DEPARTURE CONTACT 125.55'),
+    ),
 }
 LPFR = {
     'approaches': {
