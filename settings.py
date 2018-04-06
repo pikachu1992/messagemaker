@@ -43,8 +43,8 @@ UNABLE ADVISE BEFORE TAXI]',
     ],
     'transition_altitude': '4000',
     'clrfreqs': (
-        # freq, contact message, closed message
-        (118.95, 'FOR DEPARTURE CLEARANCE CONTACT DEL 118.950', 'DEL CLOSED'),
+        # freq, contact message
+        (118.95, 'FOR DEPARTURE CLEARANCE CONTACT DEL 118.950'),
         (121.75, 'DEL FREQ CLOSED FOR DEPARTURE CLEARANCE CONTACT GND 121.750'),
         (118.1, 'GND AND DEL FREQ CLOSED FOR DEPARTURE CLEARANCE CONTACT \
 TWR 118.100'),
