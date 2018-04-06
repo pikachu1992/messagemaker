@@ -31,10 +31,5 @@ If your pull request includes code, make sure it includes test cases for, at lea
 Welcome changes:
 
  - PEP8. Thats a big failure from the start.
-
-
-
-Available at:
-https://messagemaker.herokuapp.com/?metar=LPPT&rwy=21&letter=A
-
-https://messagemaker.herokuapp.com/?metar=$metar($atisairport)&rwy=$arrrwy($atisairport)&letter=$atiscode
+ 
+ - New API. The python-metar module, really does more than it should; I guess a metar parser, and metar (parsed) to ATIS trans 
