@@ -32,4 +32,4 @@ Welcome changes:
 
  - PEP8. Thats a big failure from the start.
  
- - New API. The python-metar module, really does more than it should; I guess a metar parser, and metar (parsed) to ATIS trans 
+ - New API. The python-metar module, really does more than it should; I guess a metar parser, and metar (parsed) to ATIS translator is the proper way to go.
