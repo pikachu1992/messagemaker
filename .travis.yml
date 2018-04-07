@@ -7,6 +7,21 @@ python:
   - 3.5
   - 3.6
 before_script: "pip install -r dev-requirements.txt"
-install: "pip install -r requirements.txt"
+install:
+  - "pip install -r requirements.txt"
 script:
   - "python setup.py test"
+after_sucess:
+  - "sudo apt-get install -Y sox zip"
+  - "cd audio"
+  - "mkdir package"
+  - "ls *wav | xargs -L 1 -I {} sox {} -b 16 -c 1 -r 7350 package/{}"
+  - "ls *wav | sed 's/.wav//g' | xargs -L 1 -I {} echo 'RECORD:{}:{}.wav' > package/atisfiles.txt"
+  - "zip -r package.zip package/"
+deploy:
+  provider: releases
+  api_key: $GH_TOKEN
+  file: audio/package/package.zip
+  skip_cleanup: true
+  on:
+    tags: true
