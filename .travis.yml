@@ -20,7 +20,7 @@ after_success:
   - "zip -r package.zip package/"
 deploy:
   provider: releases
-  api_key: $GH_TOKEN
+  api_key: "$GH_TOKEN"
   file: "audio/package/package.zip"
   skip_cleanup: true
   on:
