@@ -12,7 +12,7 @@ install:
 script:
   - "python setup.py test"
 after_success:
-  - "sudo apt-get install -Y sox zip"
+  - "sudo apt-get install sox zip"
   - "cd audio"
   - "mkdir package"
   - "ls *wav | xargs -L 1 -I {} sox {} -b 16 -c 1 -r 7350 package/{}"
