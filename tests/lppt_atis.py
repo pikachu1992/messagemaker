@@ -223,10 +223,9 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         '[BR]'),
     )
     @unpack
-    #@unittest.expectedFailure
     def test_precip(self, metar, expected):
         metar = Metar.Metar(metar)
-        self.assertEqual(precip(metar), expected, 'issue #16')
+        self.assertEqual(precip(metar), expected)
 
     # @data(
     #     ('METAR LPPT 191800Z 35015KT 11/06 Q1016 RERA',
