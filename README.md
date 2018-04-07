@@ -10,7 +10,7 @@ Other software used by Message Maker may be provided under different licenses, p
 
 ## Euroscope Installation
 
-1. Get the [latest audio package](https://github.com/pedro2555/messagemaker/files/1882520/audio.zip), extract to `Documents/Euroscope/messagemaker/`.
+1. Get the [latest audio package](https://github.com/pedro2555/messagemaker/releases/latest), extract to `Documents/Euroscope/messagemaker/`.
 
 ![image](https://user-images.githubusercontent.com/1645623/38401424-92d36974-394d-11e8-9bb0-c5e2535b1de8.png)
 
