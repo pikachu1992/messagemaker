@@ -98,6 +98,42 @@ def wind(metar):
         parts.append(part)
     return ' '.join(parts)
 
+def precip(metar):
+    if not metar.weather:
+        return ''
+
+    parts = []
+    for weather in metar.weather:
+        intensity, description, precipitation, obscuration, other = weather
+
+        # do the intensity of the precipitation first
+        if intensity is not None and precipitation:
+            if intensity == '':
+                parts.append('[MOD]')
+            elif intensity == '-':
+                parts.append('[FBL]')
+            elif intensity == '+':
+                parts.append('[HVY]')
+
+        joint_part = []
+        if precipitation:
+            if description:
+                joint_part.append(description)
+            joint_part.append(precipitation)
+            print('[%s]' % ''.join(joint_part))
+            if len(joint_part) > 0:
+                parts.append('[%s]' % ''.join(joint_part))
+
+        if obscuration:
+            if description:
+                joint_part.append(description)
+            joint_part.append(obscuration)
+            print('[%s]' % ''.join(joint_part))
+            if len(joint_part) > 0:
+                parts.append('[%s]' % ''.join(joint_part))
+
+    return ' '.join(parts)
+
 def sky(metar):
     parts = []
     if str(metar.vis) == '10000 meters':
@@ -110,11 +146,13 @@ def sky(metar):
         #   4000M 3000M ..
         if metar.vis:
             # calculate units, see issue #22
-            vis = '{%d}' % int(metar.vis._value)
+            vis = int(metar.vis._value)
             units = 'MTS'
-            if metar.vis._value > 4000:
-                vis = '%d' % int(metar.vis._value / 1000)
+            if metar.vis._value >= 5000:
+                vis = int(metar.vis._value / 1000)
                 units = 'KM'
+            if vis % 100 == 0:
+                vis = '{%d}' % vis
             parts.append('[VIS] %s[%s]' % (vis, units))
         ## clouds
         clouds = [c for c in metar.sky if c[0] in ('FEW', 'SCT', 'BKN', 'OVC')]

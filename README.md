@@ -8,6 +8,20 @@ Without disconsideration to the above, information deemed as not useful on VATSI
 Message Maker is provided as free software under the terms of the GNU General Public License, version 2 of the license.
 Other software used by Message Maker may be provided under different licenses, please refer to any 
 
+## Euroscope Installation
+
+1. Get the [latest audio package](https://github.com/pedro2555/messagemaker/files/1882520/audio.zip), extract to `Documents/Euroscope/messagemaker/`.
+
+![image](https://user-images.githubusercontent.com/1645623/38401424-92d36974-394d-11e8-9bb0-c5e2535b1de8.png)
+
+2. On the `Voice ATIS Setup Dialog` in Euroscope, select the `atisfiles.txt` included with the audio package
+
+![image](https://user-images.githubusercontent.com/1645623/38401444-b149ae54-394d-11e8-9b5a-e95d8944f86e.png)
+
+3. On the same dialog, replace your current URL with:
+
+    `https://messagemaker.herokuapp.com/?metar=$metar($atisairport)&rwy=$arrrwy($atisairport)&letter=$atiscode`
+
 ## Contributing
 
 Make sure your contributions fall under projecto scope above, and submit either an issue or a pull request.
@@ -17,10 +31,5 @@ If your pull request includes code, make sure it includes test cases for, at lea
 Welcome changes:
 
  - PEP8. Thats a big failure from the start.
-
-
-
-Available at:
-https://messagemaker.herokuapp.com/?metar=LPPT&rwy=21&letter=A
-
-https://messagemaker.herokuapp.com/?metar=$metar($atisairport)&rwy=$arrrwy($atisairport)&letter=$atiscode
+ 
+ - New API. The python-metar module, really does more than it should; I guess a metar parser, and metar (parsed) to ATIS translator is the proper way to go.

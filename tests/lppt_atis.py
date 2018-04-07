@@ -168,8 +168,28 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         self.assertEqual(wind(metar), expected)
 
     @data(
+        ('METAR LPPT 191800Z 36010KT CAVOK 11/06 Q1016',
+        '[CAVOK]'),
         ('METAR LPPT 191800Z 36010KT 9999 11/06 Q1016',
         '[VIS] 10[KM]'),
+        ('METAR LPPT 191800Z 36010KT 9000 11/06 Q1016',
+        '[VIS] 9[KM]'),
+        ('METAR LPPT 191800Z 36010KT 8000 11/06 Q1016',
+        '[VIS] 8[KM]'),
+        ('METAR LPPT 191800Z 36010KT 5000 11/06 Q1016',
+        '[VIS] 5[KM]'),
+        ('METAR LPPT 191800Z 36010KT 4500 11/06 Q1016',
+        '[VIS] {4500}[MTS]'),
+        ('METAR LPPT 191800Z 36010KT 4000 11/06 Q1016',
+        '[VIS] {4000}[MTS]'),
+        ('METAR LPPT 191800Z 36010KT 1000 11/06 Q1016',
+        '[VIS] {1000}[MTS]'),
+        ('METAR LPPT 191800Z 36010KT 0600 11/06 Q1016',
+        '[VIS] {600}[MTS]'),
+        ('METAR LPPT 191800Z 36010KT 0550 11/06 Q1016',
+        '[VIS] 550[MTS]'),
+        ('METAR LPPT 191800Z 36010KT 0250 11/06 Q1016',
+        '[VIS] 250[MTS]'),
     )
     @unpack
     def test_vis(self, metar, expected):
@@ -177,39 +197,46 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         self.assertEqual(sky(metar), expected)
 
     @data(
-        ('METAR LPPT 191800Z 36010KT 9000 11/06 Q1016',
-        '[VIS] 9[KM]'),
-        ('METAR LPPT 191800Z 36010KT 8000 11/06 Q1016',
-        '[VIS] 8[KM]'),
-        ('METAR LPPT 191800Z 36010KT 5000 11/06 Q1016',
-        '[VIS] 5[KM]'),
-        ('METAR LPPT 191800Z 36010KT 4000 11/06 Q1016',
-        '[VIS] {4000}[MTS]'),
-        ('METAR LPPT 191800Z 36010KT 1000 11/06 Q1016',
-        '[VIS] {1000}[MTS]'),
-        ('METAR LPPT 191800Z 36010KT 0600 11/06 Q1016',
-        '[VIS] {600}[MTS]'),
-    )
-    @unpack
-    def test_vis_issue22(self, metar, expected):
-        metar = Metar.Metar(metar)
-        self.assertEqual(sky(metar), expected, 'issue #22')
-
-    @data(
         ('METAR LPPT 191800Z 35015KT RA 11/06 Q1016',
-        '[MOD] [RAIN]'),
-        ('METAR LPPT 191800Z 35015KT SHRA 11/06 Q1016',
-        '[MOD] [SHOWERS OF RAIN]'),
+        '[MOD] [RA]'),
         ('METAR LPPT 191800Z 35015KT -RA 11/06 Q1016',
-        '[FEEBLE] [RAIN]'),
+        '[FBL] [RA]'),
+        ('METAR LPPT 191800Z 35015KT +RA 11/06 Q1016',
+        '[HVY] [RA]'),
+        ('METAR LPPT 191800Z 35015KT SHRA 11/06 Q1016',
+        '[MOD] [SHRA]'),
         ('METAR LPPT 191800Z 35015KT -SHRA 11/06 Q1016',
-        '[FEEBLE] [SHOWERS OF RAIN]'),
+        '[FBL] [SHRA]'),
+        ('METAR LPPT 191800Z 35015KT +SHRA 11/06 Q1016',
+        '[HVY] [SHRA]'),
+        ('METAR LPPT 050820Z 12006KT 0400 FG VV002 04/03 Q1005',
+        '[FG]'),
+        ('METAR LPPT 050820Z 12006KT 0400 PRFG VV002 04/03 Q1005',
+        '[PRFG]'),
+        ('METAR LPPT 050820Z 12006KT 0400 RADZ FG VV002 04/03 Q1005',
+        '[MOD] [RADZ] [FG]'),
+        ('METAR LPPT 050820Z 12006KT 0400 -DZ PRFG VV002 04/03 Q1005',
+        '[FBL] [DZ] [PRFG]'),
+        ('METAR LPPT 050820Z 12006KT 0400 -DZ BCFG VV002 04/03 Q1005',
+        '[FBL] [DZ] [BCFG]'),
+        ('METAR LPPT 191800Z 35015KT BR 11/06 Q1016',
+        '[BR]'),
     )
     @unpack
-    @unittest.expectedFailure
+    #@unittest.expectedFailure
     def test_precip(self, metar, expected):
         metar = Metar.Metar(metar)
         self.assertEqual(precip(metar), expected, 'issue #16')
+
+    # @data(
+    #     ('METAR LPPT 191800Z 35015KT 11/06 Q1016 RERA',
+    #     '[RE][RA]'),
+    # )
+    # @unpack
+    # @unittest.expectedFailure
+    # def test_precip(self, metar, expected):
+    #     metar = Metar.Metar(metar)
+    #     self.assertEqual(precip(metar), expected, 'issue #')
 
     @data(
         ('METAR LPPT 191800Z 35015KT 11/06 Q1016',
@@ -232,6 +259,8 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         '[CLD] [FEW] [CB] {2000} [FT]'),
         ('METAR LPPT 191800Z 35015KT VV001 11/06 Q1016',
         '[VV] {100} [FT]'),
+        ('METAR LPPT 191800Z 35015KT VV000 11/06 Q1016',
+        '[VV] {0} [FT]'),
     )
     @unpack
     def test_sky(self, metar, expected):
@@ -240,10 +269,9 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
 
     @data(
         ('METAR LPPT 191800Z 35015KT FEW000 11/06 Q1016',
-        '[CLD] [FEW] {000} [FT]')
+        '[CLD] [FEW] {0} [FT]')
     )
     @unpack
-    @unittest.expectedFailure
     def test_sky_gndlevel(self, metar, expected):
         metar = Metar.Metar(metar)
         self.assertEqual(sky(metar), expected, 'see: issue#15')
