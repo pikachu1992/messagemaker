@@ -188,6 +188,7 @@ def message(metar, rwy, letter, airports, tl_tbl):
     parts.append(transition_level(airport, tl_tbl, metar))
     parts.append(arrdep_info(airport, rwy))
     parts.append(wind(metar))
+    parts.append(precip(metar))
     parts.append(sky(metar))
     parts.append(temperature(metar))
     parts.append(dewpoint(metar))

@@ -49,6 +49,15 @@ class TestIntegration(unittest.TestCase):
                 settings.TRANSITION),
             '')
 
+    def test_message_containsprecipt(self):
+        atis = message(
+            'METAR LPPT 010200Z 35010KT 9999 RA SCT027 11/12 Q101',
+            self.rwy,
+            self.letter,
+            settings.AIRPORTS,
+            settings.TRANSITION)
+        self.assertIn('RA', atis)
+
     @unittest.expectedFailure
     def test_message_windshear_doesnotfail(self):
         self.assertNotEqual(
