@@ -17,11 +17,12 @@ after_success:
   - "mkdir package"
   - "ls *wav | xargs -L 1 -I {} sox {} -b 16 -c 1 -r 7350 package/{}"
   - "ls *wav | sed 's/.wav//g' | xargs -L 1 -I {} echo 'RECORD:{}:{}.wav' > package/atisfiles.txt"
-  - "zip -r package.zip package/"
+  - "zip -r ../package.zip package/"
+  - "cd .."
 deploy:
   provider: releases
   api_key: "$GH_TOKEN"
-  file: "package/package.zip"
+  file: "package.zip"
   skip_cleanup: true
   on:
     tags: true
