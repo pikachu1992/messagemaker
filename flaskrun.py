@@ -32,13 +32,16 @@ def hello_world():
     rwy = request.args.get('rwy')
     letter = request.args.get('letter')
 
+    show_freqs = request.args.get('show_freqs', False)
+
     if metar and rwy and letter:
         return message_try(
             metar,
             rwy,
             letter,
             settings.AIRPORTS,
-            settings.TRANSITION)
+            settings.TRANSITION,
+            show_freqs)
     else:
         return 'wrong usage'
 

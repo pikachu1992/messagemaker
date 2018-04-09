@@ -27,10 +27,10 @@ import requests
 import json
 import traceback
 
-def message_try(metar, rwy, letter, airports, tl_tbl):
+def message_try(metar, rwy, letter, airports, tl_tbl, show_freqs = False):
     response = None
     try:
-        response = message(metar, rwy, letter, airports, tl_tbl)
+        response = message(metar, rwy, letter, airports, tl_tbl, show_freqs)
     except Exception as crap:
         print(traceback.format_exc())
 
@@ -182,7 +182,7 @@ def dewpoint(metar):
 def qnh(metar):
     return '[QNH] %d' % metar.press._value
 
-def message(metar, rwy, letter, airports, tl_tbl):
+def message(metar, rwy, letter, airports, tl_tbl, show_freqs = False):
     if len(metar) == 4:
         metar = download_metar(metar)
 
@@ -193,6 +193,10 @@ def message(metar, rwy, letter, airports, tl_tbl):
     parts.append(intro(letter, metar))
     parts.append(approach(rwy, airport))
     parts.append(transition_level(airport, tl_tbl, metar))
+    if show_freqs:
+        freqs = tuple(getonlinestations(airport))
+        parts.append(depfreq(airport, freqs))
+        parts.append(clrfreq(airport, freqs))
     parts.append(arrdep_info(airport, rwy))
     parts.append(wind(metar))
     parts.append(precip(metar))
