@@ -77,32 +77,44 @@ class TestLpptAtis(unittest.TestCase):
             expected)
 
     @data(
-        ((121.75, 118.95), 118.95),
-        ((118.1, 121.75), 121.75),
-        ((121.75, 118.1), 121.75),
+        (
+            ('121.75',),
+            None
+        ),
+        (
+            ('118.1',),
+            None
+        ),
+        (
+            ('121.75', '118.95'),
+            '[FOR DEP CLEARANCE CONTACT DEL 118.950]'
+        ),
     )
     @unpack
-    @unittest.expectedFailure
-    def test_findclrfreq(self, onlinefreqs, expected):
-        freq, message = findclrfreq(self.airport, onlinefreq)
+    def test_clrfreq(self, onlinefreqs, expected):
+        part = clrfreq(self.airport, onlinefreqs)
         self.assertEqual(
-            freq,
             expected,
-            'issue #10')
+            part,
+            str(onlinefreqs))
 
     @data(
-        ((119.1, 121.75, 118.95), 119.1),
-        ((125.125, 119.1), 125.125),
-        ((125.55, 119.1), 119.1),
-        ((125.55), 125.55)
+        (
+            ('119.1', '118.1'),
+            '[AFTER DEP CONTACT 119.1]'
+        ),
+        (
+            ('125.55', '119.1', '118.1'),
+            '[AFTER DEP CONTACT 119.1]'
+        ),
     )
     @unpack
     @unittest.expectedFailure
-    def test_finddepfreq(self, onlinefreqs, expected):
-        freq, message = finddepfreq(self.airport, onlinefreq)
-        self.assertEqual(
-            freq,
-            expected,
+    def test_depfreq(self, online_freqs, expected):
+        part = depfreq(self.airport, online_freqs)
+        self.assertIn(
+            str(expected),
+            part,
             'issue #10')
 
     @data(

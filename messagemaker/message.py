@@ -24,8 +24,8 @@ from metar import Metar
 from messagemaker import *
 from bisect import bisect_right
 import requests
+import json
 import traceback
-
 
 def message_try(metar, rwy, letter, airports, tl_tbl):
     response = None
@@ -35,6 +35,15 @@ def message_try(metar, rwy, letter, airports, tl_tbl):
         print(traceback.format_exc())
 
     return '[ATIS OUT OF SERVICE]' if response is None else response
+
+def clrfreq(airport, online_freqs):
+    if len(online_freqs) < 2:
+        return None
+    
+    parts = airport['clr_freq']
+    for freq, part in parts:
+        if freq in online_freqs:
+            return part
 
 def intro(letter, metar):
     template = '[$airport ATIS] [$letter] $time'
@@ -205,3 +214,13 @@ def message(metar, rwy, letter, airports, tl_tbl):
 def download_metar(icao):
     return requests.get(
         'https://avwx.rest/api/metar/%s' % icao).json()['Raw-Report']
+
+def get_online_stations(icao):
+    """Returns all vatsim frequencies online at
+    a given airport"""
+
+    url='https://vatsim-status-proxy.herokuapp.com/clients?where={"clienttype":\"ATC"}'
+    data=json.loads(requests.get(url).text)
+    return [c['frequency'] for c in data
+            if icao in c['callsgn']]
+
