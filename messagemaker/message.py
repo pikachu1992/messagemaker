@@ -129,7 +129,6 @@ def precip(metar):
             if description:
                 joint_part.append(description)
             joint_part.append(precipitation)
-            print('[%s]' % ''.join(joint_part))
             if len(joint_part) > 0:
                 parts.append('[%s]' % ''.join(joint_part))
 
@@ -137,7 +136,6 @@ def precip(metar):
             if description:
                 joint_part.append(description)
             joint_part.append(obscuration)
-            print('[%s]' % ''.join(joint_part))
             if len(joint_part) > 0:
                 parts.append('[%s]' % ''.join(joint_part))
 
