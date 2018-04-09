@@ -18,7 +18,7 @@ Other software used by Message Maker may be provided under different licenses, p
 
 ![image](https://user-images.githubusercontent.com/1645623/38401444-b149ae54-394d-11e8-9b5a-e95d8944f86e.png)
 
-3. On the same dialog, replace your current URL with:
+3. On the same dialog, replace your current `ATIS Maker URL` with:
 
     `https://messagemaker.herokuapp.com/?metar=$metar($atisairport)&rwy=$arrrwy($atisairport)&letter=$atiscode`
 
