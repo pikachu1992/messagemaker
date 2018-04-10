@@ -92,7 +92,7 @@ class TestLpptAtis(unittest.TestCase):
     )
     @unpack
     def test_clrfreq(self, onlinefreqs, expected):
-        part = clrfreq(self.airport, onlinefreqs)
+        part = freq(self.airport, onlinefreqs, 'clr_freq')
         self.assertEqual(
             expected,
             part,
@@ -109,9 +109,8 @@ class TestLpptAtis(unittest.TestCase):
         ),
     )
     @unpack
-    @unittest.expectedFailure
     def test_depfreq(self, online_freqs, expected):
-        part = depfreq(self.airport, online_freqs)
+        part = freq(self.airport, online_freqs, 'dep_freq')
         self.assertIn(
             str(expected),
             part,

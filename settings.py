@@ -51,9 +51,13 @@ UNABLE ADVISE BEFORE TAXI]',
         ('125.55', '[ON THE GROUND CONTACT 125.550]'),
     ),
     'dep_freq': (
-        (125.125, '[AFTER DEPARTURE CONTACT 125.125]'),
-        (119.1, '[AFTER DEPARTURE CONTACT 119.1]'),
-        (125.55, '[AFTER DEPARTURE CONTACT 125.55]'),
+        ('125.125', '[AFTER DEP CONTACT 125.125]'),
+        ('119.1', '[AFTER DEP CONTACT 119.1]'),
+        ('125.55', '[AFTER DEP CONTACT 125.55]'),
+    ),
+    'callsigns': (
+       'LPPT',
+       'LPPC',
     ),
 }
 LPFR = {
@@ -66,7 +70,19 @@ LPFR = {
         '28': []
     },
     'general_info': [],
-    'transition_altitude': '4000'
+    'transition_altitude': '4000',
+    'clr_freq': (
+        # freq, contact message
+        ('118.575', '[GND OPEN 118.575]'),
+        ('120.750', '[GND CLOSED]'),
+        ('119.4', '[ON THE GROUND CONTACT 119.400]'),
+        ('125.55', '[ON THE GROUND CONTACT 125.550]'),
+    ),
+    'dep_freq': (),
+    'callsigns': (
+       'LPFR',
+       'LPPC',
+    ),
 }
 LPPR = {
     'approaches': {
@@ -78,7 +94,19 @@ LPPR = {
         '35': []
     },
     'general_info': [],
-    'transition_altitude': '4000'
+    'transition_altitude': '4000',
+    'clr_freq': (
+        # freq, contact message
+        ('118.920', '[FOR ATC CLEARANCE CONTACT PORTO DEL]'),
+        ('118.000', '[PORTO DEL CLOSED]'),
+        ('121.100', '[FREQ 118.1 CLOSED CONTACT FREQ 121.1] [PORTO DEL CLOSED]'),
+        ('125.55', '[ON THE GROUND CONTACT 125.550]'),
+    ),
+    'dep_freq': (),
+    'callsigns': (
+       'LPPR',
+       'LPPC',
+    ),
 }
 LPMA = {
     'approaches': {
@@ -90,7 +118,18 @@ LPMA = {
         '23': []
     },
     'general_info': [],
-    'transition_altitude': '5000'
+    'transition_altitude': '5000',
+    'clr_freq': (
+        # freq, contact message
+        ('118.350', '[ON THE GROUND CONTACT TWR 118.350]'),
+        ('119.6', '[ON THE GROUND CONTACT 119.600]'),
+        ('125.55', '[ON THE GROUND CONTACT 125.550]'),
+    ),
+    'dep_freq': (),
+    'callsigns': (
+       'LPMA',
+       'LPPC',
+    ),
 }
 
 AIRPORTS = {

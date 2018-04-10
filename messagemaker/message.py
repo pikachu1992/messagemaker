@@ -26,6 +26,7 @@ from bisect import bisect_right
 import requests
 import json
 import traceback
+from itertools import *
 
 def message_try(metar, rwy, letter, airports, tl_tbl, show_freqs = False):
     response = None
@@ -36,11 +37,11 @@ def message_try(metar, rwy, letter, airports, tl_tbl, show_freqs = False):
 
     return '[ATIS OUT OF SERVICE]' if response is None else response
 
-def clrfreq(airport, online_freqs):
+def freq(airport, online_freqs, freq_type):
     if len(online_freqs) < 2:
         return None
     
-    parts = airport['clr_freq']
+    parts = airport[freq_type]
     for freq, part in parts:
         if freq in online_freqs:
             return part
@@ -195,8 +196,12 @@ def message(metar, rwy, letter, airports, tl_tbl, show_freqs = False):
     parts.append(transition_level(airport, tl_tbl, metar))
     if show_freqs:
         freqs = tuple(getonlinestations(airport))
-        parts.append(depfreq(airport, freqs))
-        parts.append(clrfreq(airport, freqs))
+        dep = freq(airport, freqs, 'dep_freq')
+        if dep is not None:
+            parts.append(dep)
+        clr = freq(airport, freqs, 'clr_freq')
+        if clr is not None:
+            parts.append(clr)
     parts.append(arrdep_info(airport, rwy))
     parts.append(wind(metar))
     parts.append(precip(metar))
@@ -217,12 +222,19 @@ def download_metar(icao):
     return requests.get(
         'https://avwx.rest/api/metar/%s' % icao).json()['Raw-Report']
 
-def get_online_stations(icao):
+def getonlinestations(airport):
     """Returns all vatsim frequencies online at
     a given airport"""
+    
+    freqs = tuple(chain(airport['clr_freq'], airport['dep_freq']))
+    freqs = { freq for freq, _ in freqs }
 
-    url='https://vatsim-status-proxy.herokuapp.com/clients?where={"clienttype":\"ATC"}'
-    data=json.loads(requests.get(url).text)
-    return [c['frequency'] for c in data
-            if icao in c['callsgn']]
+    where = ','.join(('{"frequency":"%s"}' % freq for freq in freqs))
+    url = 'https://vatsim-status-proxy.herokuapp.com/clients?\
+where={"$or":[%s]}' % where
+    stations = json.loads(requests.get(url).text)['_items']
+
+    return [station['frequency'] for station in stations
+                for callsign in airport['callsigns']
+                    if callsign in station['callsign']]
 
