@@ -29,10 +29,16 @@ import traceback
 from itertools import chain
 from collections import namedtuple
 
-def message_try(metar, rwy, letter, airports, tl_tbl, show_freqs = False):
+def message_try(metar,
+                rwy,
+                letter,
+                airports,
+                tl_tbl,
+                show_freqs = False,
+                hiro=False):
     response = None
     try:
-        response = message(metar, rwy, letter, airports, tl_tbl, show_freqs)
+        response = message(metar, rwy, letter, airports, tl_tbl, show_freqs, hiro)
     except Exception as crap:
         print(traceback.format_exc())
 
@@ -199,7 +205,7 @@ def dewpoint(metar):
 def qnh(metar):
     return '[QNH] %d' % metar.press._value
 
-def message(metar, rwy, letter, airports, tl_tbl, show_freqs = False):
+def message(metar, rwy, letter, airports, tl_tbl, show_freqs, hiro):
     if len(metar) == 4:
         metar = download_metar(metar)
 
@@ -210,6 +216,8 @@ def message(metar, rwy, letter, airports, tl_tbl, show_freqs = False):
     parts.append(intro(letter, metar))
     parts.append(approach(rwy, airport))
     parts.append(transition_level(airport, tl_tbl, metar))
+    if hiro and 'hiro' in airport:
+        parts.append(airport['hiro'])
     if show_freqs:
         part = freqinfo(airport, tuple(getonlinestations(airport)))
         if part is not None:

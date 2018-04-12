@@ -59,6 +59,7 @@ UNABLE ADVISE BEFORE TAXI]',
        'LPPT',
        'LPPC',
     ),
+    'hiro': '[HIGH INTENSITY RWY OPS]',
 }
 LPFR = {
     'approaches': {
