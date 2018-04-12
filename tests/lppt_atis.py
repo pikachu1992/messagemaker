@@ -78,43 +78,73 @@ class TestLpptAtis(unittest.TestCase):
 
     @data(
         (
-            ('121.75',),
-            None
+            ('121.750',),
+            '121.750'
         ),
         (
-            ('118.1',),
-            None
+            ('118.100',),
+            '118.100'
         ),
         (
-            ('121.75', '118.95'),
-            '[FOR DEP CLEARANCE CONTACT DEL 118.950]'
+            ('121.750', '118.950'),
+            '118.950'
         ),
     )
     @unpack
     def test_clrfreq(self, onlinefreqs, expected):
-        part = freq(self.airport, onlinefreqs, 'clr_freq')
+        f, _ = freq(self.airport, onlinefreqs, 'clr_freq')
         self.assertEqual(
             expected,
-            part,
+            f,
             str(onlinefreqs))
 
     @data(
         (
-            ('119.1', '118.1'),
-            '[AFTER DEP CONTACT 119.1]'
+            ('119.100', '118.100'),
+            '119.100'
         ),
         (
-            ('125.55', '119.1', '118.1'),
-            '[AFTER DEP CONTACT 119.1]'
+            ('125.550', '119.100', '118.100'),
+            '119.100'
         ),
     )
     @unpack
     def test_depfreq(self, online_freqs, expected):
-        part = freq(self.airport, online_freqs, 'dep_freq')
+        f, _ = freq(self.airport, online_freqs, 'dep_freq')
         self.assertIn(
-            str(expected),
+            expected,
+            f,
+            str(online_freqs))
+
+    @data(
+        (
+            ('118.100', '118.950'),
+            None
+        ),
+        (
+            ('118.100', '121.750'),
+            '[FOR DEP CLEARANCE CONTACT GND 121.750]'
+        ),
+        (
+            ('119.100', '118.100', '118.950'),
+            '[AFTER DEP CONTACT 119.1] [FOR DEP CLEARANCE CONTACT DEL 118.950]'
+        ),
+        (
+            ('119.100',),
+            '[ON THE GROUND CONTACT APP 119.1]'
+        ),
+        (
+            (),
+            None
+        )
+    )
+    @unpack
+    def test_freqinfo(self, online_freqs, expected):
+        part = freqinfo(self.airport, online_freqs)
+        self.assertEqual(
+            expected,
             part,
-            'issue #10')
+            str(online_freqs))
 
     @data(
         ('03', '[AFTER LANDING VACATE VIA HN]'),
