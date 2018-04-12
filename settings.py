@@ -47,8 +47,8 @@ UNABLE ADVISE BEFORE TAXI]',
         ('118.950', '[FOR DEP CLEARANCE CONTACT DEL 118.950]'),
         ('121.750', '[FOR DEP CLEARANCE CONTACT GND 121.750]'),
         ('118.100', '[FOR DEP CLEARANCE CONTACT TWR 118.100]'),
-        ('119.100', '[ON THE GROUND CONTACT APP 119.100]'),
-        ('125.550', '[ON THE GROUND CONTACT 125.550]'),
+        ('119.100', '[ON THE GROUND CONTACT APP 119.1]'),
+        ('125.550', '[ON THE GROUND CONTACT 125.55]'),
     ),
     'dep_freq': (
         ('125.1250', '[AFTER DEP CONTACT 125.125]'),
@@ -76,8 +76,8 @@ LPFR = {
         # freq, contact message
         ('118.575', ''),
         ('120.750', '[GND CLOSED]'),
-        ('119.400', '[ON THE GROUND CONTACT APP 119.400]'),
-        ('125.55', '[ON THE GROUND CONTACT 125.550]'),
+        ('119.400', '[ON THE GROUND CONTACT APP 119.4]'),
+        ('125.55', '[ON THE GROUND CONTACT 125.55]'),
     ),
     'dep_freq': (),
     'callsigns': (
@@ -101,7 +101,7 @@ LPPR = {
         ('118.920', '[FOR ATC CLEARANCE CONTACT PORTO DEL]'),
         ('118.000', '[PORTO DEL CLOSED]'),
         ('121.100', '[FREQ 118.1 CLOSED CONTACT FREQ 121.1]'),
-        ('125.550', '[ON THE GROUND CONTACT 125.550]'),
+        ('125.550', '[ON THE GROUND CONTACT 125.55]'),
     ),
     'dep_freq': (),
     'callsigns': (
@@ -123,8 +123,8 @@ LPMA = {
     'clr_freq': (
         # freq, contact message
         ('118.350', '[ON THE GROUND CONTACT TWR 118.350]'),
-        ('119.600', '[ON THE GROUND CONTACT APP 119.600]'),
-        ('125.550', '[ON THE GROUND CONTACT 125.550]'),
+        ('119.600', '[ON THE GROUND CONTACT APP 119.6]'),
+        ('125.550', '[ON THE GROUND CONTACT 125.55]'),
     ),
     'dep_freq': (),
     'callsigns': (

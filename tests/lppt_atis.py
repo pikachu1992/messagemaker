@@ -131,7 +131,7 @@ class TestLpptAtis(unittest.TestCase):
         ),
         (
             ('119.100',),
-            '[ON THE GROUND CONTACT APP 119.100]'
+            '[ON THE GROUND CONTACT APP 119.1]'
         ),
         (
             (),
