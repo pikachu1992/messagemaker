@@ -73,7 +73,7 @@ LPFR = {
     'transition_altitude': '4000',
     'clr_freq': (
         # freq, contact message
-        ('118.575', '[GND OPEN 118.575]'),
+        ('118.575', ''),
         ('120.750', '[GND CLOSED]'),
         ('119.4', '[ON THE GROUND CONTACT APP 119.400]'),
         ('125.55', '[ON THE GROUND CONTACT 125.550]'),
