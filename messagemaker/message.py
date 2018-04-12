@@ -58,15 +58,15 @@ def freqinfo(airport, online_freqs):
     del_freq, _ = airport['clr_freq'][0]
     parts = []
     
-    if clr_freq != del_freq or (clr_freq != dep_freq and dep_freq is not None):
-        if clr_msg is not None:
-            parts.append(clr_msg)
-
-    if clr_freq != dep_freq:
-        if dep_msg is not None:
+    if dep_freq is not None:
+        if dep_freq != clr_freq:
             parts.append(dep_msg)
-
-    return ' '.join(parts)
+        parts.append(clr_msg)
+        return ' '.join(parts)
+    
+    if clr_freq != del_freq and clr_msg is not None:
+        parts.append(clr_msg)
+        return ' '.join(parts)
 
 def intro(letter, metar):
     template = '[$airport ATIS] [$letter] $time'

@@ -119,7 +119,7 @@ class TestLpptAtis(unittest.TestCase):
     @data(
         (
             ('118.1', '118.95'),
-            ''
+            None
         ),
         (
             ('118.1', '121.75'),
@@ -127,7 +127,7 @@ class TestLpptAtis(unittest.TestCase):
         ),
         (
             ('119.1', '118.1', '118.95'),
-            '[FOR DEP CLEARANCE CONTACT DEL 118.950] [AFTER DEP CONTACT 119.1]'
+            '[AFTER DEP CONTACT 119.1] [FOR DEP CLEARANCE CONTACT DEL 118.950]'
         ),
         (
             ('119.1',),
@@ -135,7 +135,7 @@ class TestLpptAtis(unittest.TestCase):
         ),
         (
             (),
-            ''
+            None
         )
     )
     @unpack
