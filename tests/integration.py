@@ -46,7 +46,9 @@ class TestIntegration(unittest.TestCase):
                 rwy,
                 self.letter,
                 settings.AIRPORTS,
-                settings.TRANSITION),
+                settings.TRANSITION,
+                False,
+                False),
             '')
 
     def test_message_containsprecipt(self):
@@ -55,7 +57,9 @@ class TestIntegration(unittest.TestCase):
             self.rwy,
             self.letter,
             settings.AIRPORTS,
-            settings.TRANSITION)
+            settings.TRANSITION,
+            False,
+            False)
         self.assertIn('RA', atis)
 
     @unittest.expectedFailure
@@ -64,6 +68,31 @@ class TestIntegration(unittest.TestCase):
             message(
                 'METAR LPPT 191800Z 35015KT 11/06 Q1016 WS ALL RWYS',
                 self.rwy,
-                self.letter),
+                self.letter,
+                settings.AIRPORTS,
+                settings.TRANSITION,
+                False,
+                False),
             '',
             'Python Metar module bug, see issue #13')
+
+    def test_message_hiro(self):
+        msg = message(
+                'METAR LPPT 191800Z 35015KT 11/06 Q1016',
+                self.rwy,
+                self.letter,
+                settings.AIRPORTS,
+                settings.TRANSITION,
+                False,
+                True)
+        self.assertIn('HIGH INTENSITY RWY OPS', msg)
+        
+        msg = message(
+                'METAR LPPT 191800Z 35015KT 11/06 Q1016',
+                self.rwy,
+                self.letter,
+                settings.AIRPORTS,
+                settings.TRANSITION,
+                False,
+                False)
+        self.assertNotIn('HIGH INTENSITY RWY OPS', msg)
