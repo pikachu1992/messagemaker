@@ -48,6 +48,7 @@ class TestIntegration(unittest.TestCase):
                 settings.AIRPORTS,
                 settings.TRANSITION,
                 False,
+                False,
                 False),
             '')
 
@@ -58,6 +59,7 @@ class TestIntegration(unittest.TestCase):
             self.letter,
             settings.AIRPORTS,
             settings.TRANSITION,
+            False,
             False,
             False)
         self.assertIn('RA', atis)
@@ -72,6 +74,7 @@ class TestIntegration(unittest.TestCase):
                 settings.AIRPORTS,
                 settings.TRANSITION,
                 False,
+                False,
                 False),
             '',
             'Python Metar module bug, see issue #13')
@@ -84,7 +87,8 @@ class TestIntegration(unittest.TestCase):
                 settings.AIRPORTS,
                 settings.TRANSITION,
                 False,
-                True)
+                True,
+                False)
         self.assertIn('HIGH INTENSITY RWY OPS', msg)
         
         msg = message(
@@ -93,6 +97,7 @@ class TestIntegration(unittest.TestCase):
                 self.letter,
                 settings.AIRPORTS,
                 settings.TRANSITION,
+                False,
                 False,
                 False)
         self.assertNotIn('HIGH INTENSITY RWY OPS', msg)

@@ -35,7 +35,8 @@ def message_try(metar,
                 airports,
                 tl_tbl,
                 show_freqs = False,
-                hiro=False):
+                hiro=False,
+                xpndr_startup=False):
     response = None
     try:
         response = message(
@@ -45,7 +46,8 @@ def message_try(metar,
             airports,
             tl_tbl,
             show_freqs,
-            hiro)
+            hiro,
+            xpndr_startup)
     except Exception as crap:
         print(traceback.format_exc())
 
@@ -210,7 +212,7 @@ def dewpoint(metar):
 def qnh(metar):
     return '[QNH] %d' % metar.press._value
 
-def message(metar, rwy, letter, airports, tl_tbl, show_freqs, hiro):
+def message(metar, rwy, letter, airports, tl_tbl, show_freqs, hiro, xpndr_startup):
     if len(metar) == 4:
         metar = download_metar(metar)
 
@@ -227,6 +229,8 @@ def message(metar, rwy, letter, airports, tl_tbl, show_freqs, hiro):
         part = freqinfo(airport, tuple(getonlinestations(airport)))
         if part is not None:
             parts.append(part)
+    if xpndr_startup and 'xpndr_startup' in airport:
+        parts.append(airport['xpndr_startup'])
     parts.append(arrdep_info(airport, rwy))
     parts.append(wind(metar))
     parts.append(precip(metar))

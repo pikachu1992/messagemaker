@@ -55,6 +55,7 @@ UNABLE ADVISE BEFORE TAXI]',
         ('119.100', '[AFTER DEP CONTACT 119.1]'),
         ('125.550', '[AFTER DEP CONTACT 125.55]'),
     ),
+    'xpndr_startup': '[EXP XPNDR ONLY AT STARTUP]',
     'callsigns': (
        'LPPT',
        'LPPC',
