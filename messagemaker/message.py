@@ -38,7 +38,14 @@ def message_try(metar,
                 hiro=False):
     response = None
     try:
-        response = message(metar, rwy, letter, airports, tl_tbl, show_freqs, hiro)
+        response = message(
+            metar,
+            rwy,
+            letter,
+            airports,
+            tl_tbl,
+            show_freqs,
+            hiro)
     except Exception as crap:
         print(traceback.format_exc())
 
@@ -57,13 +64,11 @@ def freqinfo(airport, online_freqs):
     clr_freq, clr_msg = freq(airport, online_freqs, 'clr_freq')
     del_freq, _ = airport['clr_freq'][0]
     parts = []
-    
     if dep_freq is not None:
         if dep_freq != clr_freq:
             parts.append(dep_msg)
         parts.append(clr_msg)
         return ' '.join(parts)
-    
     if clr_freq != del_freq and clr_msg is not None:
         parts.append(clr_msg)
         return ' '.join(parts)
@@ -245,16 +250,15 @@ def download_metar(icao):
 def getonlinestations(airport):
     """Returns all vatsim frequencies online at
     a given airport"""
-    
+
     freqs = tuple(chain(airport['clr_freq'], airport['dep_freq']))
-    freqs = { freq for freq, _ in freqs }
+    freqs = { '{:0<7}'.format(freq) for freq, _ in freqs }
 
     where = ','.join(('{"frequency":"%s"}' % freq for freq in freqs))
     url = 'https://vatsim-status-proxy.herokuapp.com/clients?\
 where={"$or":[%s]}' % where
     stations = json.loads(requests.get(url).text)['_items']
 
-    return [station['frequency'] for station in stations
+    return (station['frequency'] for station in stations
                 for callsign in airport['callsigns']
-                    if callsign in station['callsign']]
-
+                    if callsign in station['callsign'])
