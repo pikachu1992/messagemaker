@@ -130,6 +130,22 @@ class TestLpptAtis(unittest.TestCase):
             '[AFTER DEP CONTACT 119.1] [FOR DEP CLEARANCE CONTACT DEL 118.950]'
         ),
         (
+            ('119.100', '118.950'),
+            '[FOR DEP CLEARANCE CONTACT DEL 118.950]'
+        ),
+        (
+            ('119.100', '121.750'),
+            '[FOR DEP CLEARANCE CONTACT GND 121.750]'
+        ),
+        (
+            ('125.550', '118.950'),
+            '[FOR DEP CLEARANCE CONTACT DEL 118.950]'
+        ),
+        (
+            ('125.550', '121.750'),
+            '[FOR DEP CLEARANCE CONTACT GND 121.750]'
+        ),
+        (
             ('119.100',),
             '[ON THE GROUND CONTACT APP 119.1]'
         ),
