@@ -64,9 +64,10 @@ def freqinfo(airport, online_freqs):
     clr_freq, clr_msg = freq(airport, online_freqs, 'clr_freq')
     del_freq, _ = airport['clr_freq'][0]
     parts = []
+    twr_online = True if airport['twr'] in online_freqs else False
 
     if dep_freq is not None:
-        if dep_freq != clr_freq:
+        if dep_freq != clr_freq and twr_online:
             parts.append(dep_msg)
         parts.append(clr_msg)
         return ' '.join(parts)
