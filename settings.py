@@ -55,6 +55,7 @@ UNABLE ADVISE BEFORE TAXI]',
         ('119.100', '[AFTER DEP CONTACT 119.1]'),
         ('125.550', '[AFTER DEP CONTACT 125.55]'),
     ),
+    'twr': '118.100',
     'callsigns': (
        'LPPT',
        'LPPC',
@@ -79,6 +80,7 @@ LPFR = {
         ('119.400', '[ON THE GROUND CONTACT APP 119.4]'),
         ('125.55', '[ON THE GROUND CONTACT 125.55]'),
     ),
+    'twr': '120.750',
     'dep_freq': (),
     'callsigns': (
        'LPFR',
@@ -104,6 +106,7 @@ LPPR = {
         ('125.550', '[ON THE GROUND CONTACT 125.55]'),
     ),
     'dep_freq': (),
+    'twr': '118.000',
     'callsigns': (
        'LPPR',
        'LPPC',
@@ -127,6 +130,7 @@ LPMA = {
         ('125.550', '[ON THE GROUND CONTACT 125.55]'),
     ),
     'dep_freq': (),
+    'twr': '118.350',
     'callsigns': (
        'LPMA',
        'LPPC',
