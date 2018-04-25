@@ -64,9 +64,10 @@ def freqinfo(airport, online_freqs):
     clr_freq, clr_msg = freq(airport, online_freqs, 'clr_freq')
     del_freq, _ = airport['clr_freq'][0]
     parts = []
+    twr_online = True if airport['twr'] in online_freqs else False
 
     if dep_freq is not None:
-        if dep_freq != clr_freq:
+        if dep_freq != clr_freq and twr_online:
             parts.append(dep_msg)
         parts.append(clr_msg)
         return ' '.join(parts)
@@ -259,7 +260,12 @@ def getonlinestations(airport):
     where = ','.join(('{"frequency":"%s"}' % freq for freq in freqs))
     url = 'https://vatsim-status-proxy.herokuapp.com/clients?\
 where={"$or":[%s]}' % where
-    stations = json.loads(requests.get(url).text)['_items']
+
+    response = requests.get(url)
+    if response.status_code != 200:
+        return ()
+
+    stations = json.loads(response.text)['_items']
 
     return (station['frequency'] for station in stations
                 for callsign in airport['callsigns']
