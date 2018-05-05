@@ -32,7 +32,7 @@ def hello_world():
     rwy = request.args.get('rwy')
     letter = request.args.get('letter')
 
-    show_freqs = request.args.get('show_freqs', False)
+    show_freqs = request.args.get('show_freqs', True)
     hiro = request.args.get('hiro', False)
 
     if metar and rwy and letter:
