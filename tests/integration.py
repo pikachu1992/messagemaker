@@ -62,11 +62,15 @@ class TestIntegration(unittest.TestCase):
             False)
         self.assertIn('RA', atis)
 
-    @unittest.expectedFailure
-    def test_message_windshear_doesnotfail(self):
+    @data(
+        'METAR LPPT 191800Z 35015KT 11/06 Q1016 WS ALL RWYS',
+        'METAR LPPT 191800Z 35015KT 11/06 Q1016 WS R03',
+        'METAR LPPT 191800Z 35015KT 11/06 Q1016 WS R21',
+    )
+    def test_message_windshear_doesnotfail(self, metar):
         self.assertNotEqual(
             message(
-                'METAR LPPT 191800Z 35015KT 11/06 Q1016 WS ALL RWYS',
+                metar,
                 self.rwy,
                 self.letter,
                 settings.AIRPORTS,
@@ -86,7 +90,7 @@ class TestIntegration(unittest.TestCase):
                 False,
                 True)
         self.assertIn('HIGH INTENSITY RWY OPS', msg)
-        
+
         msg = message(
                 'METAR LPPT 191800Z 35015KT 11/06 Q1016',
                 self.rwy,

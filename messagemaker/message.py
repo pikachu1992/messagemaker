@@ -212,10 +212,19 @@ def dewpoint(metar):
 def qnh(metar):
     return '[QNH] %d' % metar.press._value
 
+def remove_windshear(metar):
+    cases = ('WS ALL RWYS', 'WS R03', 'WS R21')
+    for case in cases:
+        windshear_index = metar.find(case)
+        if windshear_index > -1:
+            return metar[0:windshear_index]
+    return metar
+
 def message(metar, rwy, letter, airports, tl_tbl, show_freqs, hiro):
     if len(metar) == 4:
         metar = download_metar(metar)
 
+    metar = remove_windshear(metar)
     metar = Metar.Metar(metar)
     airport = airports[metar.station_id]
     parts = []
