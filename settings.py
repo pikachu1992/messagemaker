@@ -61,6 +61,7 @@ UNABLE ADVISE BEFORE TAXI]',
        'LPPC',
     ),
     'hiro': '[HIGH INTENSITY RWY OPS]',
+    'xpndr_startup': '[EXP XPNDR ONLY AT STARTUP]'
 }
 LPFR = {
     'approaches': {

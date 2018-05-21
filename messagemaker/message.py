@@ -35,7 +35,8 @@ def message_try(metar,
                 airports,
                 tl_tbl,
                 show_freqs = False,
-                hiro=False):
+                hiro=False,
+                xpndr_startup=False):
     response = None
     try:
         response = message(
@@ -45,7 +46,8 @@ def message_try(metar,
             airports,
             tl_tbl,
             show_freqs,
-            hiro)
+            hiro,
+            xpndr_startup)
     except Exception as crap:
         print(traceback.format_exc())
 
@@ -220,7 +222,14 @@ def remove_windshear(metar):
             return metar[0:windshear_index]
     return metar
 
-def message(metar, rwy, letter, airports, tl_tbl, show_freqs, hiro):
+def message(metar,
+            rwy,
+            letter,
+            airports,
+            tl_tbl,
+            show_freqs,
+            hiro,
+            xpndr_startup):
     if len(metar) == 4:
         metar = download_metar(metar)
 
@@ -232,6 +241,8 @@ def message(metar, rwy, letter, airports, tl_tbl, show_freqs, hiro):
     parts.append(intro(letter, metar))
     parts.append(approach(rwy, airport))
     parts.append(transition_level(airport, tl_tbl, metar))
+    if xpndr_startup and 'xpndr_startup' in airport:
+        parts.append(airport['xpndr_startup'])
     if hiro and 'hiro' in airport:
         parts.append(airport['hiro'])
     if show_freqs:
