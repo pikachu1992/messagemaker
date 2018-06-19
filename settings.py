@@ -61,7 +61,8 @@ UNABLE ADVISE BEFORE TAXI]',
        'LPPC',
     ),
     'hiro': '[HIGH INTENSITY RWY OPS]',
-    'xpndr_startup': '[EXP XPNDR ONLY AT STARTUP]'
+    'xpndr_startup': '[EXP XPNDR ONLY AT STARTUP]',
+    'rwy_35_clsd': '[RWY 35 CLSD FOR TKOF AND LDG AVBL TO TAXI]'
 }
 LPFR = {
     'approaches': {

@@ -49,6 +49,7 @@ class TestIntegration(unittest.TestCase):
                 settings.TRANSITION,
                 False,
                 False,
+                False,
                 False),
             '')
 
@@ -59,6 +60,7 @@ class TestIntegration(unittest.TestCase):
             self.letter,
             settings.AIRPORTS,
             settings.TRANSITION,
+            False,
             False,
             False,
             False)
@@ -79,6 +81,7 @@ class TestIntegration(unittest.TestCase):
                 settings.TRANSITION,
                 False,
                 False,
+                False,
                 False),
             '',
             'Python Metar module bug, see issue #13')
@@ -92,6 +95,7 @@ class TestIntegration(unittest.TestCase):
                 settings.TRANSITION,
                 False,
                 True,
+                False,
                 False)
         self.assertIn('HIGH INTENSITY RWY OPS', msg)
 
@@ -101,6 +105,7 @@ class TestIntegration(unittest.TestCase):
                 self.letter,
                 settings.AIRPORTS,
                 settings.TRANSITION,
+                False,
                 False,
                 False,
                 False)
@@ -115,7 +120,8 @@ class TestIntegration(unittest.TestCase):
                 settings.TRANSITION,
                 False,
                 False,
-                True)
+                True,
+                False)
         self.assertIn('EXP XPNDR ONLY AT STARTUP', msg)
 
         msg = message(
@@ -126,5 +132,43 @@ class TestIntegration(unittest.TestCase):
                 settings.TRANSITION,
                 False,
                 False,
+                False,
                 False)
         self.assertNotIn('EXP XPNDR ONLY AT STARTUP', msg)
+
+    def test_message_rwy_35_clsd(self):
+        msg = message(
+                'METAR LPPT 191800Z 35015KT 11/06 Q1016',
+                self.rwy,
+                self.letter,
+                settings.AIRPORTS,
+                settings.TRANSITION,
+                False,
+                False,
+                False,
+                True)
+        self.assertIn('RWY 35 CLSD FOR TKOF AND LDG AVBL TO TAXI', msg)
+
+        msg = message(
+                'METAR LPPT 191800Z 35015KT 11/06 Q1016',
+                self.rwy,
+                self.letter,
+                settings.AIRPORTS,
+                settings.TRANSITION,
+                False,
+                False,
+                False,
+                False)
+        self.assertNotIn('RWY 35 CLSD FOR TKOF AND LDG AVBL TO TAXI', msg)
+
+        msg = message(
+                'METAR LPFR 191800Z 35015KT 11/06 Q1016',
+                '10',
+                self.letter,
+                settings.AIRPORTS,
+                settings.TRANSITION,
+                False,
+                False,
+                False,
+                True)
+        self.assertNotIn('RWY 35 CLSD FOR TKOF AND LDG AVBL TO TAXI', msg)

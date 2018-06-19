@@ -35,6 +35,7 @@ def hello_world():
     show_freqs = request.args.get('show_freqs', True)
     hiro = request.args.get('hiro', False)
     xpndr_startup = request.args.get('xpndr_startup', False)
+    rwy_35_clsd = request.args.get('rwy_35_clsd', False)
 
     if metar and rwy and letter:
         return message_try(
@@ -45,7 +46,8 @@ def hello_world():
             settings.TRANSITION,
             show_freqs,
             hiro,
-            xpndr_startup)
+            xpndr_startup,
+            rwy_35_clsd)
     else:
         return 'wrong usage'
 

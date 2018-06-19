@@ -36,7 +36,8 @@ def message_try(metar,
                 tl_tbl,
                 show_freqs = False,
                 hiro=False,
-                xpndr_startup=False):
+                xpndr_startup=False,
+                rwy_35_clsd=False):
     response = None
     try:
         response = message(
@@ -47,7 +48,8 @@ def message_try(metar,
             tl_tbl,
             show_freqs,
             hiro,
-            xpndr_startup)
+            xpndr_startup,
+            rwy_35_clsd)
     except Exception as crap:
         print(traceback.format_exc())
 
@@ -229,7 +231,8 @@ def message(metar,
             tl_tbl,
             show_freqs,
             hiro,
-            xpndr_startup):
+            xpndr_startup,
+            rwy_35_clsd):
     if len(metar) == 4:
         metar = download_metar(metar)
 
@@ -245,6 +248,8 @@ def message(metar,
         parts.append(airport['xpndr_startup'])
     if hiro and 'hiro' in airport:
         parts.append(airport['hiro'])
+    if rwy_35_clsd and 'rwy_35_clsd' in airport:
+        parts.append(airport['rwy_35_clsd'])
     if show_freqs:
         part = freqinfo(airport, tuple(getonlinestations(airport)))
         if part is not None:
