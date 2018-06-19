@@ -15,7 +15,7 @@ after_success:
   - "sudo apt-get install sox zip"
   - "cd audio"
   - "mkdir package"
-  - "ls *wav | xargs -L 1 -I {} sox {} -b 16 -c 1 -r 7350 package/{}"
+  - "ls *wav | xargs -L 1 -I {} sox --norm {}  -b 16 -c 1 -r 7350 package/{}"
   - "ls *wav | sed 's/.wav//g' | xargs -L 1 -I {} echo 'RECORD:{}:{}.wav' > package/atisfiles.txt"
   - "zip -r ../package.zip package/"
   - "cd .."
