@@ -242,6 +242,8 @@ def message(metar,
     parts = []
 
     parts.append(intro(letter, metar))
+    if ',' in rwy:
+        rwy = rwy.split(',')[0]
     parts.append(approach(rwy, airport))
     parts.append(transition_level(airport, tl_tbl, metar))
     if xpndr_startup and 'xpndr_startup' in airport:
