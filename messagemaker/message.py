@@ -198,6 +198,19 @@ def clouds(metar):
         for c in metar.report.sky.clouds
     ]])
 
+def rvr(metar):
+    _, rvr = metar.report.sky.rvr[0]
+    units = 'MTS'
+    rvr = rvr.distance
+    if rvr >= 5000:
+        rvr = int(rvr / 1000)
+        units = 'KM'
+    if rvr % 100 == 0:
+        rvr = '{%d}' % rvr
+
+    return f'[RVR TDZ] {rvr}[{units}]'
+
+
 def sky(metar):
     parts = []
     _metar = metar
@@ -212,6 +225,8 @@ def sky(metar):
         #   4000M 3000M ..
         if metar.visibility and metar.visibility.distance < 10000:
             parts.append(vis(_metar))
+        if metar.rvr:
+            parts.append(rvr(_metar))
         ## clouds
         clouds = metar.clouds
         if len(clouds) > 0:

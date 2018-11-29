@@ -223,6 +223,15 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         self.assertEqual(vis(metar), expected)
 
     @data(
+        ('METAR LPPT 291530Z 31006KT 280V350 1200 R21/1900N +RADZ BKN004 FEW018CB 15/15 Q1017',
+        '[RVR TDZ] {1900}[MTS]'),
+    )
+    @unpack
+    def test_rvr(self, metar, expected):
+        metar = parse(metar)
+        self.assertEqual(rvr(metar), expected)
+
+    @data(
         ('METAR LPPT 191800Z 35015KT 0100 RA 11/06 Q1016',
         '[MOD] [RA]'),
         ('METAR LPPT 191800Z 35015KT 0100 -RA 11/06 Q1016',
