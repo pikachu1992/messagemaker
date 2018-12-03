@@ -21,7 +21,7 @@ along with Message Maker.  If not, see <http://www.gnu.org/licenses/>.
 # -*- coding: utf-8 -*-
 import unittest
 from ddt import ddt, data, unpack
-from metar import Metar
+from avweather.metar import parse
 
 from messagemaker.message import *
 import settings
@@ -42,7 +42,7 @@ class TestLpptAtis(unittest.TestCase):
     )
     @unpack
     def test_intro(self, metar, expected):
-        metar = Metar.Metar(metar)
+        metar = parse(metar)
         self.assertEqual(intro(self.letter, metar), expected)
 
     @data(
@@ -54,24 +54,24 @@ class TestLpptAtis(unittest.TestCase):
         self.assertEqual(approach(rwy, self.airport), expected)
 
     @data(
-        ('METAR LPPT 191800Z 35015KT 11/06 Q942', '[TL] 75'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q943', '[TL] 70'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q959', '[TL] 70'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q960', '[TL] 65'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q976', '[TL] 65'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q978', '[TL] 60'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q994', '[TL] 60'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q996', '[TL] 55'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q1013', '[TL] 55'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q1014', '[TL] 50'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q1031', '[TL] 50'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q1032', '[TL] 45'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q1050', '[TL] 45'),
-        ('METAR LPPT 191800Z 35015KT 11/06 Q1051', '[TL] 40'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q0942', '[TL] 75'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q0943', '[TL] 70'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q0959', '[TL] 70'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q0960', '[TL] 65'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q0976', '[TL] 65'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q0978', '[TL] 60'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q0994', '[TL] 60'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q0996', '[TL] 55'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q1013', '[TL] 55'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q1014', '[TL] 50'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q1031', '[TL] 50'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q1032', '[TL] 45'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q1050', '[TL] 45'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q1051', '[TL] 40'),
     )
     @unpack
     def test_transitionlevel(self, metar, expected):
-        metar = Metar.Metar(metar)
+        metar = parse(metar)
         self.assertEqual(
             transition_level(self.airport, self.transition, metar),
             expected)
@@ -192,12 +192,10 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
     )
     @unpack
     def test_wind(self, metar, expected):
-        metar = Metar.Metar(metar)
+        metar = parse(metar)
         self.assertEqual(wind(metar), expected)
 
     @data(
-        ('METAR LPPT 191800Z 36010KT CAVOK 11/06 Q1016',
-        '[CAVOK]'),
         ('METAR LPPT 191800Z 36010KT 9999 11/06 Q1016',
         '[VIS] 10[KM]'),
         ('METAR LPPT 191800Z 36010KT 9000 11/06 Q1016',
@@ -221,21 +219,30 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
     )
     @unpack
     def test_vis(self, metar, expected):
-        metar = Metar.Metar(metar)
-        self.assertEqual(sky(metar), expected)
+        metar = parse(metar)
+        self.assertEqual(vis(metar), expected)
 
     @data(
-        ('METAR LPPT 191800Z 35015KT RA 11/06 Q1016',
+        ('METAR LPPT 291530Z 31006KT 280V350 1200 R21/1900N +RADZ BKN004 FEW018CB 15/15 Q1017',
+        '[RVR TDZ] {1900}[MTS]'),
+    )
+    @unpack
+    def test_rvr(self, metar, expected):
+        metar = parse(metar)
+        self.assertEqual(rvr(metar), expected)
+
+    @data(
+        ('METAR LPPT 191800Z 35015KT 0100 RA 11/06 Q1016',
         '[MOD] [RA]'),
-        ('METAR LPPT 191800Z 35015KT -RA 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 0100 -RA 11/06 Q1016',
         '[FBL] [RA]'),
-        ('METAR LPPT 191800Z 35015KT +RA 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 0100 +RA 11/06 Q1016',
         '[HVY] [RA]'),
-        ('METAR LPPT 191800Z 35015KT SHRA 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 0200 SHRA 11/06 Q1016',
         '[MOD] [SHRA]'),
-        ('METAR LPPT 191800Z 35015KT -SHRA 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 0300 -SHRA 11/06 Q1016',
         '[FBL] [SHRA]'),
-        ('METAR LPPT 191800Z 35015KT +SHRA 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 0300 +SHRA 11/06 Q1016',
         '[HVY] [SHRA]'),
         ('METAR LPPT 050820Z 12006KT 0400 FG VV002 04/03 Q1005',
         '[FG]'),
@@ -247,92 +254,114 @@ T POSITION U FOR DEPARTURE, IF UNABLE ADVISE BEFORE TAXI]'),
         '[FBL] [DZ] [PRFG]'),
         ('METAR LPPT 050820Z 12006KT 0400 -DZ BCFG VV002 04/03 Q1005',
         '[FBL] [DZ] [BCFG]'),
-        ('METAR LPPT 191800Z 35015KT BR 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 0300 BR 11/06 Q1016',
         '[BR]'),
     )
     @unpack
-    def test_precip(self, metar, expected):
-        metar = Metar.Metar(metar)
-        self.assertEqual(precip(metar), expected)
-
-    # @data(
-    #     ('METAR LPPT 191800Z 35015KT 11/06 Q1016 RERA',
-    #     '[RE][RA]'),
-    # )
-    # @unpack
-    # @unittest.expectedFailure
-    # def test_precip(self, metar, expected):
-    #     metar = Metar.Metar(metar)
-    #     self.assertEqual(precip(metar), expected, 'issue #')
+    def test_weather(self, metar, expected):
+        metar = parse(metar)
+        self.assertEqual(weather(metar), expected)
 
     @data(
-        ('METAR LPPT 191800Z 35015KT 11/06 Q1016',
-        ''),
-        ('METAR LPPT 191800Z 35015KT FEW003 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 9999 FEW003 11/06 Q1016',
         '[CLD] [FEW] {300} [FT]'),
-        ('METAR LPPT 191800Z 35015KT SCT003 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 9999 SCT003 11/06 Q1016',
         '[CLD] [SCT] {300} [FT]'),
-        ('METAR LPPT 191800Z 35015KT BKN003 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 9999 BKN003 11/06 Q1016',
         '[CLD] [BKN] {300} [FT]'),
-        ('METAR LPPT 191800Z 35015KT OVC003 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 9999 OVC003 11/06 Q1016',
         '[CLD] [OVC] {300} [FT]'),
-        ('METAR LPPT 191800Z 35015KT FEW030 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 9999 FEW030 11/06 Q1016',
         '[CLD] [FEW] {3000} [FT]'),
-        ('METAR LPPT 191800Z 35015KT FEW100 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 9999 FEW100 11/06 Q1016',
         '[CLD] [FEW] {10000} [FT]'),
-        ('METAR LPPT 191800Z 35015KT FEW040TCU 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 9999 FEW040TCU 11/06 Q1016',
         '[CLD] [FEW] [TCU] {4000} [FT]'),
-        ('METAR LPPT 191800Z 35015KT FEW020CB 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 9999 FEW020CB 11/06 Q1016',
         '[CLD] [FEW] [CB] {2000} [FT]'),
-        ('METAR LPPT 191800Z 35015KT VV001 11/06 Q1016',
+    )
+    @unpack
+    def test_clouds(self, metar, expected):
+        metar = parse(metar)
+        self.assertEqual(clouds(metar), expected)
+
+    @data(
+        ('METAR LPPT 191800Z 35015KT CAVOK 11/06 Q1016 RERA',
+        '[RE][RA]'),
+    )
+    @unpack
+    @unittest.expectedFailure
+    def test_recentWeather(self, metar, expected):
+        metar = parse(metar)
+        self.assertEqual(precip(metar), expected, 'issue #TODO')
+
+    @data(
+        ('METAR LPPT 191800Z 35015KT 9999 11/06 Q1016',
+        ''),
+        ('METAR LPPT 191800Z 35015KT 9999 FEW003 11/06 Q1016',
+        '[CLD] [FEW] {300} [FT]'),
+        ('METAR LPPT 191800Z 35015KT 9999 SCT003 11/06 Q1016',
+        '[CLD] [SCT] {300} [FT]'),
+        ('METAR LPPT 191800Z 35015KT 9999 BKN003 11/06 Q1016',
+        '[CLD] [BKN] {300} [FT]'),
+        ('METAR LPPT 191800Z 35015KT 9999 OVC003 11/06 Q1016',
+        '[CLD] [OVC] {300} [FT]'),
+        ('METAR LPPT 191800Z 35015KT 9999 FEW030 11/06 Q1016',
+        '[CLD] [FEW] {3000} [FT]'),
+        ('METAR LPPT 191800Z 35015KT 9999 FEW100 11/06 Q1016',
+        '[CLD] [FEW] {10000} [FT]'),
+        ('METAR LPPT 191800Z 35015KT 9999 FEW040TCU 11/06 Q1016',
+        '[CLD] [FEW] [TCU] {4000} [FT]'),
+        ('METAR LPPT 191800Z 35015KT 9999 FEW020CB 11/06 Q1016',
+        '[CLD] [FEW] [CB] {2000} [FT]'),
+        ('METAR LPPT 191800Z 35015KT 9999 VV001 11/06 Q1016',
         '[VV] {100} [FT]'),
-        ('METAR LPPT 191800Z 35015KT VV000 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 9999 VV000 11/06 Q1016',
         '[VV] {0} [FT]'),
     )
     @unpack
     def test_sky(self, metar, expected):
-        metar = Metar.Metar(metar)
+        metar = parse(metar)
         self.assertEqual(sky(metar), expected)
 
     @data(
-        ('METAR LPPT 191800Z 35015KT FEW000 11/06 Q1016',
+        ('METAR LPPT 191800Z 35015KT 9999 FEW000 11/06 Q1016',
         '[CLD] [FEW] {0} [FT]')
     )
     @unpack
     def test_sky_gndlevel(self, metar, expected):
-        metar = Metar.Metar(metar)
+        metar = parse(metar)
         self.assertEqual(sky(metar), expected, 'see: issue#15')
 
     @data(
-        ('METAR LPPT 191800Z 35015KT 10/05 Q1016', '[TEMP] 10'),
-        ('METAR LPPT 191800Z 35015KT 05/05 Q1016', '[TEMP] 5'),
-        ('METAR LPPT 191800Z 35015KT M10/05 Q1016', '[TEMP] -10'),
-        ('METAR LPPT 191800Z 35015KT M05/05 Q1016', '[TEMP] -5'),
-        ('METAR LPPT 191800Z 35015KT M00/05 Q1016', '[TEMP] 0'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 10/05 Q1016', '[TEMP] 10'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 05/05 Q1016', '[TEMP] 5'),
+        ('METAR LPPT 191800Z 35015KT CAVOK M10/05 Q1016', '[TEMP] -10'),
+        ('METAR LPPT 191800Z 35015KT CAVOK M05/05 Q1016', '[TEMP] -5'),
+        ('METAR LPPT 191800Z 35015KT CAVOK M00/05 Q1016', '[TEMP] 0'),
     )
     @unpack
     def test_temperature(self, metar, expected):
-        metar = Metar.Metar(metar)
+        metar = parse(metar)
         self.assertEqual(temperature(metar), expected)
 
     @data(
-        ('METAR LPPT 191800Z 35015KT 10/10 Q1016', '[DP] 10'),
-        ('METAR LPPT 191800Z 35015KT 10/05 Q1016', '[DP] 5'),
-        ('METAR LPPT 191800Z 35015KT 10/M10 Q1016', '[DP] -10'),
-        ('METAR LPPT 191800Z 35015KT 10/M05 Q1016', '[DP] -5'),
-        ('METAR LPPT 191800Z 35015KT 10/M00 Q1016', '[DP] 0'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 10/10 Q1016', '[DP] 10'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 10/05 Q1016', '[DP] 5'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 10/M10 Q1016', '[DP] -10'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 10/M05 Q1016', '[DP] -5'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 10/M00 Q1016', '[DP] 0'),
     )
     @unpack
     def test_dewpoint(self, metar, expected):
-        metar = Metar.Metar(metar)
+        metar = parse(metar)
         self.assertEqual(dewpoint(metar), expected)
 
     @data(
-        ('METAR LPPT 191800Z 35015KT 10/10 Q1016', '[QNH] 1016'),
-        ('METAR LPPT 191800Z 35015KT 10/10 Q996', '[QNH] 996'),
-        ('METAR LPPT 191800Z 35015KT 10/10 Q0996', '[QNH] 996'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 10/10 Q1016', '[QNH] 1016'),
+        ('METAR LPPT 191800Z 35015KT CAVOK 10/10 Q0996', '[QNH] 996'),
     )
     @unpack
     def test_qnh(self, metar, expected):
-        metar = Metar.Metar(metar)
+        metar = parse(metar)
         self.assertEqual(qnh(metar), expected)

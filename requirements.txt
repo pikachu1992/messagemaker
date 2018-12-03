@@ -1,4 +1,4 @@
-metar
+avweather
 requests
 Flask
 gunicorn

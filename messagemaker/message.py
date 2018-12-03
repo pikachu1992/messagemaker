@@ -20,7 +20,6 @@ along with Message Maker.  If not, see <http://www.gnu.org/licenses/>.
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from string import Template
-from metar import Metar
 from messagemaker import *
 from bisect import bisect_right
 import requests
@@ -28,6 +27,7 @@ import json
 import traceback
 from itertools import chain
 from collections import namedtuple
+from avweather.metar import parse as metarparse
 
 def message_try(metar,
                 rwy,
@@ -82,9 +82,9 @@ def freqinfo(airport, online_freqs):
 def intro(letter, metar):
     template = '[$airport ATIS] [$letter] $time'
     return Template(template).substitute(
-        airport=metar.station_id,
+        airport=metar.location,
         letter=letter,
-        time=metar.time.strftime("%H%M"))
+        time='%02d%02d' % (metar.time.hour, metar.time.minute))
 
 def approach(rwy, airport):
     template = '[EXP ${approach} APCH] [RWY IN USE ${rwy}]'
@@ -97,7 +97,7 @@ def transition_level(airport, tl_tbl, metar):
     transition_alt = airport['transition_altitude']
     index = bisect_right(
         tl_tbl[transition_alt],
-        (metar.press._value,))
+        (float(metar.report.pressure),))
     _, transition_level = tl_tbl[transition_alt][index]
     return template % transition_level
 
@@ -110,74 +110,112 @@ def arrdep_info(airport, rwy):
     return ' '.join(parts)
 
 def wind(metar):
+    report = metar.report.wind
     parts = []
-    if metar.wind_dir:
+    if report.direction == 'VRB':
+        parts.append('[WND] [VRB] %d [KT]' % report.speed)
+    else:
         template = '[WND] ${direction} [DEG] ${speed} [KT]'
         part = Template(template).substitute(
-            direction='%03d' % metar.wind_dir._degrees,
-            speed='%d' % metar.wind_speed._value)
+            direction='%03d' % report.direction,
+            speed='%d' % report.speed)
 
         # calm winds (to avoid WND 000 DEG 0 KT)
-        if metar.wind_speed._value == 0:
+        if report.speed == 0:
             parts.append('[WND] [CALM]')
         else:
             parts.append(part)
-    else:
-        parts.append('[WND] [VRB] %d [KT]' % metar.wind_speed._value)
     ## gusts
-    if metar.wind_gust:
+    if report.gust:
         template = '[MAX] ${gusts} [KT]'
         part = Template(template).substitute(
-            gusts='%d' % metar.wind_gust._value
+            gusts='%d' % report.gust
         )
         parts.append(part)
     ## variable
-    if metar.wind_dir_to and metar.wind_dir_from:
+    if report.variable_from and report.variable_to:
         template = '[VRB BTN] ${direction_from} [AND] ${direction_to} [DEG]'
         part = Template(template).substitute(
-            direction_from='%03d' % metar.wind_dir_from._degrees,
-            direction_to='%03d' % metar.wind_dir_to._degrees
+            direction_from='%03d' % report.variable_from,
+            direction_to='%03d' % report.variable_to
         )
         parts.append(part)
     return ' '.join(parts)
 
-def precip(metar):
-    if not metar.weather:
+def weather(metar):
+    weather = metar.report.sky.weather
+    if not weather:
         return ''
 
     parts = []
-    for weather in metar.weather:
-        intensity, description, precipitation, obscuration, other = weather
 
-        # do the intensity of the precipitation first
-        if intensity is not None and precipitation:
-            if intensity == '':
-                parts.append('[MOD]')
-            elif intensity == '-':
-                parts.append('[FBL]')
-            elif intensity == '+':
-                parts.append('[HVY]')
+    if weather.precipitation:
+        precip = weather.precipitation
+        if precip.intensity == '':
+            parts.append('[MOD]')
+        elif precip.intensity == '-':
+            parts.append('[FBL]')
+        elif precip.intensity == '+':
+            parts.append('[HVY]')
+        # handling 'Rain and Drizzle' case
+        precip_phenomena = list(precip.phenomena)
+        if 'RA' in precip_phenomena and 'DZ' in precip_phenomena:
+            precip_phenomena.remove('RA')
+            precip_phenomena.remove('DZ')
+            precip_phenomena.append('RADZ')
+        for phenomena in precip_phenomena:
+            parts.append(f'[{phenomena}]')
 
-        joint_part = []
-        if precipitation:
-            if description:
-                joint_part.append(description)
-            joint_part.append(precipitation)
-            if len(joint_part) > 0:
-                parts.append('[%s]' % ''.join(joint_part))
-
-        if obscuration:
-            if description:
-                joint_part.append(description)
-            joint_part.append(obscuration)
-            if len(joint_part) > 0:
-                parts.append('[%s]' % ''.join(joint_part))
+    for obscur in weather.obscuration:
+        parts.append(f'[{obscur}]')
 
     return ' '.join(parts)
 
+def vis(metar):
+    metar = metar.report.sky.visibility
+
+    ## visibility
+    # above or at 5km visibility is given in KM:
+    #   5KM 6KM 7KM .. 10KM
+    # below 5 km visibility is given in meters:
+    #   4000M 3000M ..
+    # calculate units, see issue #22
+    units = 'MTS'
+    vis = metar.distance
+    if vis >= 5000:
+        vis = int(vis / 1000)
+        units = 'KM'
+    if vis % 100 == 0:
+        vis = '{%d}' % vis
+
+    return f'[VIS] {vis}[{units}]'
+
+def clouds(metar):
+    return ' '.join(['[CLD]', *[
+        f'[{c.amount}] [{c.type}] {{{c.height * 100}}} [FT]'
+        if c.type else
+        f'[{c.amount}] {{{c.height * 100}}} [FT]'
+        for c in metar.report.sky.clouds
+    ]])
+
+def rvr(metar):
+    _, rvr = metar.report.sky.rvr[0]
+    units = 'MTS'
+    rvr = rvr.distance
+    if rvr >= 5000:
+        rvr = int(rvr / 1000)
+        units = 'KM'
+    if rvr % 100 == 0:
+        rvr = '{%d}' % rvr
+
+    return f'[RVR TDZ] {rvr}[{units}]'
+
+
 def sky(metar):
     parts = []
-    if str(metar.vis) == '10000 meters':
+    _metar = metar
+    metar = metar.report.sky
+    if not metar:
         parts.append('[CAVOK]')
     else:
         ## visibility
@@ -185,36 +223,35 @@ def sky(metar):
         #   5KM 6KM 7KM .. 10KM
         # below 5 km visibility is given in meters:
         #   4000M 3000M ..
-        if metar.vis:
-            # calculate units, see issue #22
-            vis = int(metar.vis._value)
-            units = 'MTS'
-            if metar.vis._value >= 5000:
-                vis = int(metar.vis._value / 1000)
-                units = 'KM'
-            if vis % 100 == 0:
-                vis = '{%d}' % vis
-            parts.append('[VIS] %s[%s]' % (vis, units))
+        if metar.visibility and metar.visibility.distance < 10000:
+            parts.append(vis(_metar))
+        if metar.rvr:
+            parts.append(rvr(_metar))
         ## clouds
-        clouds = [c for c in metar.sky if c[0] in ('FEW', 'SCT', 'BKN', 'OVC')]
+        clouds = metar.clouds
         if len(clouds) > 0:
             parts.append('[CLD]')
-        for sky in metar.sky:
-            cover, height, cb = sky
-            parts.append('[%s]' % cover)
-            if cb:
-                parts.append('[%s]' % cb.upper())
-            parts.append('{%d} [FT]' % height._value)
+        for cloud in clouds:
+            camount, cheight, ctype = cloud
+            parts.append('[%s]' % camount)
+            if ctype:
+                parts.append('[%s]' % ctype)
+            parts.append('{%d} [FT]' % (cheight * 100))
+        if metar.verticalvis is not None:
+            parts.append(f'[VV] {{{metar.verticalvis * 100}}} [FT]')
     return ' '.join(parts)
 
 def temperature(metar):
-    return '[TEMP] %d' % metar.temp._value
+    temperature = metar.report.temperature.air
+    return f'[TEMP] {temperature}'
 
 def dewpoint(metar):
-    return '[DP] %d' % metar.dewpt._value
+    dewpoint = metar.report.temperature.dewpoint
+    return f'[DP] {dewpoint}'
 
 def qnh(metar):
-    return '[QNH] %d' % metar.press._value
+    pressure = metar.report.pressure
+    return f'[QNH] {pressure}'
 
 def remove_windshear(metar):
     cases = ('WS ALL RWYS', 'WS R03', 'WS R21')
@@ -236,9 +273,8 @@ def message(metar,
     if len(metar) == 4:
         metar = download_metar(metar)
 
-    metar = remove_windshear(metar)
-    metar = Metar.Metar(metar)
-    airport = airports[metar.station_id]
+    metar = metarparse(metar)
+    airport = airports[metar.location]
     parts = []
 
     parts.append(intro(letter, metar))
@@ -258,7 +294,8 @@ def message(metar,
             parts.append(part)
     parts.append(arrdep_info(airport, rwy))
     parts.append(wind(metar))
-    parts.append(precip(metar))
+    if metar.report.sky:
+        parts.append(weather(metar))
     parts.append(sky(metar))
     parts.append(temperature(metar))
     parts.append(dewpoint(metar))
@@ -268,7 +305,7 @@ def message(metar,
     for general_info in airport['general_info']:
         parts.append(general_info)
 
-    parts.append('[ACK %s INFO] [%s]' % (metar.station_id.upper(), letter))
+    parts.append('[ACK %s INFO] [%s]' % (metar.location, letter))
 
     return ' '.join(parts) if parts is not None else None
 
