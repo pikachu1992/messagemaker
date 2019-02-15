@@ -25,7 +25,7 @@ LPPT = {
     'approaches': {
         '03': 'ILS',
         '21': 'ILS Z',
-        '35': 'VOR',
+        '35': 'VOR DME',
         '17': 'VISUAL'
     },
     'arrdep_info': {
