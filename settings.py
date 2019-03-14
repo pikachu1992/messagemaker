@@ -51,7 +51,7 @@ UNABLE ADVISE BEFORE TAXI]',
         ('125.550', '[ON THE GROUND CONTACT 125.55]'),
     ),
     'dep_freq': (
-        ('120.600', '[AFTER DEP CONTACT 125.125]'),
+        ('120.600', '[AFTER DEP CONTACT 120.6]'),
         ('119.100', '[AFTER DEP CONTACT 119.1]'),
         ('125.550', '[AFTER DEP CONTACT 125.55]'),
     ),
