@@ -21,10 +21,12 @@ along with Message Maker.  If not, see <http://www.gnu.org/licenses/>.
 # -*- coding: utf-8 -*-
 from flask import Flask, request
 from messagemaker.message import message_try
+from flask_cors import CORS
 import settings
 import os
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def hello_world():
